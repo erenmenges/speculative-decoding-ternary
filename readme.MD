@@ -1,0 +1,1 @@
+Experiment: For one FP big model, test 4-5 small pre-trained QAT ternary, PTQ ternary and FP models as speculative decoders and compare their acceptance rates. 
