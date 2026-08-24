@@ -6,7 +6,9 @@ mypy.ini
 data/alpha/
 data/empirical/
 data/targets/
+data/tex/
 data/prompts.json
 .ruff.toml
 .ruff_cache
 ptq_models/
+.DS_store

@@ -1,14 +1,14 @@
-from matplotlib.ticker import FixedLocator, FixedFormatter
 import matplotlib.pyplot as plt
 import numpy as np
-import torch
 import pandas as pd
+import torch
+from matplotlib.ticker import FixedFormatter, FixedLocator
 from transformers import AutoModelForCausalLM
 
 import config
 
 
-def load_data():
+def load_data() -> pd.DataFrame:
     rows = []
     for target_dir in config.ALPHA_DIR.iterdir():  ### iter thru alpha target folders
         for csv_file in target_dir.glob("*.csv"):
@@ -31,7 +31,7 @@ def calculate_confidence_interval(values, n_subset=2000, seed=config.PLOTTING_SE
     means = np.array([rng.choice(values, size=len(values), replace=True).mean() for _ in range(n_subset)])  ### sample with replacement - fake population sampling
     return np.percentile(means, 2.5), np.percentile(means, 97.5)
 
-def print_cell_confidence_intervals(data):
+def print_cell_confidence_intervals(data: pd.DataFrame):
     for key, group in data.groupby(["target", "family", "size_m", "domain"]):
         values = group["alpha"].to_numpy()
         low, high = calculate_confidence_interval(values, 2000, config.PLOTTING_SEED)
@@ -40,7 +40,7 @@ def print_cell_confidence_intervals(data):
               f"{values.mean():.4f} [{low:.4f}, {high:.4f}]  n={len(values)}")  ### 20s pads the string to 20 chars always, 5.0f pads the number to a 5 digit int
 
 
-def paired_gap_ci(data, target, draft_a, draft_b, domain):
+def paired_gap_ci(data: pd.DataFrame, target, draft_a, draft_b, domain):
     sub = data[(data["target"] == target) & (data["domain"] == domain)]  ### get our domain and our target model's data only
     a = sub[sub["draft"] == draft_a].set_index("prompt_id")["alpha"]  ### get draft a's alphas
     b = sub[sub["draft"] == draft_b].set_index("prompt_id")["alpha"]
@@ -53,7 +53,7 @@ def paired_gap_ci(data, target, draft_a, draft_b, domain):
     low, high = calculate_confidence_interval(diff, 2000, config.PLOTTING_SEED)
     return diff.mean(), low, high
 
-def plot_paired_gaps(data, domain, sizes=("99M", "190M", "390M", "560M", "830M", "1.1B", "1.5B")):
+def plot_paired_gaps(data: pd.DataFrame, domain, sizes=("99M", "190M", "390M", "560M", "830M", "1.1B", "1.5B")):
     fig, ax = plt.subplots(figsize=(5, 3.5))
     for target_id in config.TARGET_IDS:
         target = config.model_name(target_id)
@@ -125,7 +125,7 @@ def load_empirical():
 def predicted_tokens_per_round(alpha, k: int = config.K):
     return sum(alpha ** i for i in range(k + 1))  ### (E[n_accepted] = a + a^2 + a^3 + ... + a^k) + 1
 
-def make_validation_table(data, empirical_prompts):
+def make_validation_table(data: pd.DataFrame, empirical_prompts):
     analytical = data[(data["target"] == "FloatLM_3.9B") & (data["draft"].isin(empirical_prompts["draft"].unique()))]  ### only get the analytical data that we have an empirical counterpart for
     merged = empirical_prompts.merge(analytical[["prompt_id", "draft", "domain", "alpha"]], on=["prompt_id", "draft"])
     merged["predicted_tokens_per_round"] = predicted_tokens_per_round(merged["alpha"])
@@ -137,7 +137,7 @@ def plot_validation(merged):
     fig, ax = plt.subplots()
     for domain, group in cell.groupby("domain"):
         ax.scatter(group["predicted_tokens_per_round"], group["measured_tokens_per_round"], label=domain)
-    lims = [cell.min().min() - 0.1, cell.max().max() + 0.1]  ### the 0.1
+    lims = (cell.min().min() - 0.1, cell.max().max() + 0.1)  ### the 0.1
     ax.plot(lims, lims, linestyle="--", linewidth=1, color="gray")  ### empirical should ideally match analytical, so we draw a slope-1 line to see if dots sit on it
     ax.set_xlim(lims)
     ax.set_ylim(lims)
@@ -149,7 +149,7 @@ def plot_validation(merged):
     fig.savefig(config.DATA_DIR / "validation_scatter.png", dpi=200)
     plt.close(fig)
 
-def parity_ratios(data, target, domain, x_col="size_m", unit="M"):
+def parity_ratios(data: pd.DataFrame, target, domain, x_col="size_m", unit="M"):
     sub = data[(data["target"] == target) & (data["domain"] == domain) & (data["size_m"] < 3900)]
     float_lm = sub[sub["family"] == "FloatLM"].groupby(x_col)["alpha"].mean()
     tri_lm = sub[sub["family"] == "TriLM"].groupby(x_col)["alpha"].mean()
@@ -169,7 +169,7 @@ def parity_ratios(data, target, domain, x_col="size_m", unit="M"):
         equivalent_size = np.exp(interpreted_size_log)
         ratio = equivalent_size / size
         print(f"TriLM {size:5.0f}{unit} ≈ FloatLM {equivalent_size:6.0f}{unit}  →  ratio {ratio:.2f}x")
-        ratios.append(ratio)
+        ratios.append({"ternary": size, "fp16_equivalent": equivalent_size, "ratio": ratio})
     return ratios
     
 TERNARY_BITS = 2
@@ -203,7 +203,7 @@ def load_footprints():
         print(f"{name:22s}----{quantizable/1e6:7.1f}M quant----{rest/1e6:6.1f}M rest----tied={tied}----{footprints[name]:7.1f} MB")
     return footprints
 
-def plot_speedup(data, domain, target, footprints, families=("FloatLM", "TriLM", "PTQ"), k=config.K):
+def plot_speedup(data: pd.DataFrame, domain, target, footprints, families=("FloatLM", "TriLM", "PTQ"), k=config.K):
     target_mb = footprints[target]
     sub = data[(data["target"] == target) & (data["domain"] == domain) & (data["family"].isin(families))]
     fig, ax = plt.subplots(figsize=(5, 3.5))
@@ -225,8 +225,108 @@ def plot_speedup(data, domain, target, footprints, families=("FloatLM", "TriLM",
     fig.savefig(config.DATA_DIR / f"speedup_{target}_{domain}.png", dpi=200)
     plt.close(fig)
 
+def save_latex(df: pd.DataFrame, name, caption, label, float_fmt="%.4f"):
+    (config.DATA_DIR / "tex").mkdir(parents=True, exist_ok=True)
+    latex = df.to_latex(
+        float_format=float_fmt,
+        na_rep="--",
+        escape=True,
+        multicolumn_format="c",
+        caption=caption,
+        label=f"tab:{label}"
+    )
+    (config.DATA_DIR / "tex" / f"table_{name}.tex").write_text(latex)
+    print(f"wrote table_{name}.tex")
+
+def table_alpha(data_full: pd.DataFrame):
+    cell = data_full.groupby(["target", "size_m", "family", "domain"])["alpha"].mean()
+    table = cell.unstack(["family", "domain"])
+    cols = pd.MultiIndex.from_product([["FloatLM", "TriLM", "PTQ"], ["web", "chat", "code"]])
+    return table.reindex(columns=cols)
+
+def table_gaps(data):
+    sizes = ["99M", "190M", "390M", "560M", "830M", "1.1B", "1.5B"]
+    rows = {}
+    for size in sizes:
+        row = {}
+        for target_id in config.TARGET_IDS:
+            target = config.model_name(target_id)
+            for domain in ["web", "chat", "code"]:
+                mean, low, high = paired_gap_ci(data, target, f"TriLM_{size}_Unpacked", f"FloatLM_{size}", domain)
+                row[(target, domain)] = f"{mean:+.4f} [{low:+.4f}, {high:+.4f}]"
+        rows[size] = row
+    table = pd.DataFrame.from_dict(rows, orient="index")
+    table.columns = pd.MultiIndex.from_tuples(table.columns)
+    return table
+
+def table_parity(data):
+    rows = []
+    for target_id in config.TARGET_IDS:
+        target = config.model_name(target_id)
+        for domain in ["web", "chat", "code"]:
+            for r in parity_ratios(data, target, domain, x_col="mb", unit="MB"):
+                rows.append({"target": target, "domain": domain, **r})  ### the ** in r in means "copy that dict into here"
+    df = pd.DataFrame(rows)
+    df[["ternary", "fp16_equivalent"]] = df[["ternary", "fp16_equivalent"]].round().astype(int) ## format for clean integers
+    return df.set_index(["target", "domain"])
+        
+def table_speedup(data: pd.DataFrame, footprints, k=config.K):
+    rows = []
+    for (target, domain, family, mb), group in data.groupby(["target", "domain", "family", "mb"]):
+        alpha = group["alpha"].mean()
+        speedup = predicted_tokens_per_round(alpha, k) / (1 + k * (mb / footprints[target]))
+        rows.append({"target": target, "family": family, "MB": round(mb, 1), "domain": domain, "speedup": speedup})
+    table = pd.DataFrame(rows).pivot_table(index=["target", "family", "MB"], columns="domain", values="speedup")
+    return table[["web", "chat", "code"]]
+
+def make_appendix_tables(data_full, data, validation, footprints):
+    save_latex(
+                table_alpha(data_full), "alpha_full",
+                r"Mean acceptance rate by draft size, family, and domain, for both targets. "
+                r"Temperature 1.0. EOS masked via setting pre-softmax logit to $-\infty$. "
+                r"The entries at size 3900, where the same 3.9B model is used as both a target and a draft, measure the pipeline's noise floor.",
+                "alpha-full")
+    save_latex(
+                table_gaps(data),
+                "paired_gaps",
+                r"Alpha penalty of a ternary draft at matched parameter count, $\alpha(TriLM) - \alpha(FloatLM)$, for both targets and all domains. " 
+                r"95\% CIs from percentile bootstrap over per-prompt paired differences (2,000 resamples). Temperature 1.0, EOS masked.",
+                "paired-gaps")
+    save_latex(
+                table_parity(data),
+                "parity", 
+                r"Memory an FP16 draft needs to match each ternary draft's acceptance rate, via interpolation of the FP16 $\alpha$-vs-memory curve. "
+                r"The two smallest ternary drafts fall below the FP16 grid and are omitted. "
+                r"Both targets, all domains.", 
+                "parity", 
+                float_fmt="%.2f")
+    save_latex(
+                table_speedup(data, footprints), 
+                "speedup", 
+                r"Predicted speedup over target-only decoding for every draft, target, and domain, $k=5$. "
+                r"Computed from mean alpha and the memory-bound cost model. "
+                r"Footprints assume 2-bit ternary projections and FP16 elsewhere.", 
+                "speedup", 
+                float_fmt="%.2f")
+    # val table needs special renaming stuff because its column names are too long
+    validation = validation.rename(columns={
+        "alpha": "analytical alpha",
+        "alpha_hat": "empirical alpha",
+        "predicted_tokens_per_round": "pred. tok/rnd",
+        "measured_tokens_per_round": "meas. tok/rnd",
+        "alpha_gap": "alpha gap",
+        "tpr_gap": "tok/rnd gap",
+    })
+    save_latex(
+                validation, 
+                "validation", 
+                r"Analytical $\alpha$ vs. empirical acceptance from end-to-end speculative decoding, with predicted \& measured tokens per round and their gaps. "
+                r"9 drafts, 3 domains, 256 prompts, FloatLM\_3.9B target, $k=5$.", 
+                "validation")
+
 if __name__ == "__main__":
     data = load_data()
+    full_data = data.copy(deep=True)
 
     # make sure 3.9B models have a ~0.99 alpha
     print("-" * 16, "Raw Analytical Results", "-" * 16)
@@ -311,3 +411,5 @@ if __name__ == "__main__":
         f, t = f"FloatLM_{size}", f"TriLM_{size}_Unpacked"
         fa, ta = sub[sub["draft"] == f]["alpha"].mean(), sub[sub["draft"] == t]["alpha"].mean()
         print(f"  {size:5s}  FloatLM {footprints[f]:7.1f}MB {fa:.4f}   TriLM {footprints[t]:6.1f}MB {ta:.4f}   delta {ta - fa:+.4f}")
+
+    make_appendix_tables(data_full=full_data, data=data, validation=val, footprints=footprints)

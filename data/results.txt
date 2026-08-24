@@ -139,51 +139,51 @@ TriLM_3.9B_Unpacked FloatLM 99     chat    0.6650  0.6529
                             3900   chat    0.9936  0.9918
                                    code    0.9945  0.9938
                                    web     0.9927  0.9909
-Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 11443.26it/s]
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 4513.07it/s]
 FloatLM_99M           ----   48.2M quant----  51.5M rest----tied=False----  199.5 MB
-Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 4028.40it/s]
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 1773.08it/s]
 FloatLM_190M          ----  113.2M quant----  77.3M rest----tied=False----  381.1 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 4018.34it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  52%|█████▏    | 114/219 [00:00<00:00, 1139.16it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1400.31it/s]
 FloatLM_390M          ----  289.4M quant---- 103.1M rest----tied=False----  785.0 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 2818.82it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  32%|███▏      | 69/219 [00:00<00:00, 679.15it/s]Loading weights:  88%|████████▊ | 193/219 [00:00<00:00, 999.74it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 976.53it/s]
 FloatLM_560M          ----  440.4M quant---- 128.8M rest----tied=False---- 1138.5 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  80%|████████  | 176/219 [00:00<00:00, 1754.21it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1857.88it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:   0%|          | 1/219 [00:00<00:23,  9.11it/s]Loading weights:  58%|█████▊    | 128/219 [00:00<00:00, 721.86it/s]Loading weights:  93%|█████████▎| 204/219 [00:00<00:00, 737.95it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 676.23it/s]
 FloatLM_830M          ----  679.5M quant---- 154.6M rest----tied=False---- 1668.2 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  55%|█████▌    | 121/219 [00:00<00:00, 1180.24it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1311.19it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:   0%|          | 1/219 [00:00<00:29,  7.27it/s]Loading weights:  35%|███▍      | 76/219 [00:00<00:00, 383.24it/s]Loading weights:  55%|█████▍    | 120/219 [00:00<00:00, 350.80it/s]Loading weights:  73%|███████▎  | 159/219 [00:00<00:00, 317.92it/s]Loading weights:  89%|████████▊ | 194/219 [00:00<00:00, 311.56it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 310.75it/s]
 FloatLM_1.1B          ----  968.9M quant---- 180.8M rest----tied=False---- 2299.4 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  35%|███▍      | 76/219 [00:00<00:00, 751.31it/s]Loading weights:  87%|████████▋ | 190/219 [00:00<00:00, 977.60it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 971.57it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:   0%|          | 1/219 [00:00<00:35,  6.17it/s]Loading weights:  27%|██▋       | 59/219 [00:00<00:00, 268.65it/s]Loading weights:  42%|████▏     | 92/219 [00:00<00:00, 261.48it/s]Loading weights:  56%|█████▌    | 122/219 [00:00<00:00, 231.47it/s]Loading weights:  68%|██████▊   | 148/219 [00:00<00:00, 225.37it/s]Loading weights:  80%|███████▉  | 175/219 [00:00<00:00, 225.69it/s]Loading weights:  92%|█████████▏| 202/219 [00:00<00:00, 229.85it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 229.29it/s]
 FloatLM_1.5B          ---- 1308.6M quant---- 206.7M rest----tied=False---- 3030.6 MB
-Loading weights:   0%|          | 0/273 [00:00<?, ?it/s]Loading weights:  11%|█▏        | 31/273 [00:00<00:00, 308.15it/s]Loading weights:  31%|███       | 85/273 [00:00<00:00, 433.56it/s]Loading weights:  53%|█████▎    | 146/273 [00:00<00:00, 510.93it/s]Loading weights:  77%|███████▋  | 211/273 [00:00<00:00, 564.38it/s]Loading weights:  98%|█████████▊| 268/273 [00:00<00:00, 381.71it/s]Loading weights: 100%|██████████| 273/273 [00:00<00:00, 424.15it/s]
+Loading weights:   0%|          | 0/273 [00:00<?, ?it/s]Loading weights:   0%|          | 1/273 [00:00<00:55,  4.87it/s]Loading weights:  14%|█▍        | 38/273 [00:00<00:01, 150.43it/s]Loading weights:  22%|██▏       | 59/273 [00:00<00:01, 114.41it/s]Loading weights:  27%|██▋       | 75/273 [00:00<00:01, 121.40it/s]Loading weights:  33%|███▎      | 90/273 [00:00<00:01, 105.27it/s]Loading weights:  38%|███▊      | 103/273 [00:01<00:01, 92.98it/s]Loading weights:  42%|████▏     | 114/273 [00:01<00:01, 95.13it/s]Loading weights:  47%|████▋     | 128/273 [00:01<00:01, 104.62it/s]Loading weights:  51%|█████▏    | 140/273 [00:01<00:01, 94.14it/s] Loading weights:  56%|█████▋    | 154/273 [00:01<00:01, 102.29it/s]Loading weights:  61%|██████    | 166/273 [00:01<00:01, 95.02it/s] Loading weights:  65%|██████▍   | 177/273 [00:01<00:00, 97.01it/s]Loading weights:  70%|██████▉   | 190/273 [00:01<00:00, 104.34it/s]Loading weights:  74%|███████▍  | 202/273 [00:02<00:00, 97.57it/s] Loading weights:  78%|███████▊  | 213/273 [00:02<00:00, 100.33it/s]Loading weights:  84%|████████▍ | 229/273 [00:02<00:00, 102.27it/s]Loading weights:  89%|████████▉ | 244/273 [00:02<00:00, 113.50it/s]Loading weights:  94%|█████████▍| 256/273 [00:02<00:00, 102.73it/s]Loading weights: 100%|██████████| 273/273 [00:02<00:00, 104.12it/s]
 FloatLM_3.9B          ---- 3680.5M quant---- 311.6M rest----tied=False---- 7984.2 MB
-Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 3529.35it/s]
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 3666.11it/s]
 TriLM_99M_Unpacked    ----   48.2M quant----  51.5M rest----tied=False----  115.1 MB
-Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 1828.47it/s]
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 1886.65it/s]
 TriLM_190M_Unpacked   ----  113.2M quant----  77.3M rest----tied=False----  182.9 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  54%|█████▍    | 118/219 [00:00<00:00, 1177.91it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1430.74it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  56%|█████▌    | 122/219 [00:00<00:00, 1212.04it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1462.45it/s]
 TriLM_390M_Unpacked   ----  289.4M quant---- 103.1M rest----tied=False----  278.5 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  31%|███       | 67/219 [00:00<00:00, 644.10it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1111.62it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  31%|███       | 67/219 [00:00<00:00, 657.04it/s]Loading weights:  89%|████████▊ | 194/219 [00:00<00:00, 1013.96it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1002.36it/s]
 TriLM_560M_Unpacked   ----  440.4M quant---- 128.8M rest----tied=False----  367.8 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  76%|███████▋  | 167/219 [00:00<00:00, 1651.06it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1799.29it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:   0%|          | 1/219 [00:00<00:22,  9.57it/s]Loading weights:  56%|█████▌    | 123/219 [00:00<00:00, 702.26it/s]Loading weights:  96%|█████████▋| 211/219 [00:00<00:00, 760.93it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 695.60it/s]
 TriLM_830M_Unpacked   ----  679.5M quant---- 154.6M rest----tied=False----  479.1 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  55%|█████▌    | 121/219 [00:00<00:00, 1185.25it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1341.60it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:   0%|          | 1/219 [00:00<00:28,  7.56it/s]Loading weights:  43%|████▎     | 94/219 [00:00<00:00, 473.66it/s]Loading weights:  72%|███████▏  | 157/219 [00:00<00:00, 522.03it/s]Loading weights:  97%|█████████▋| 213/219 [00:00<00:00, 470.72it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 451.42it/s]
 TriLM_1.1B_Unpacked   ----  968.9M quant---- 180.8M rest----tied=False----  603.9 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  35%|███▍      | 76/219 [00:00<00:00, 759.22it/s]Loading weights:  88%|████████▊ | 193/219 [00:00<00:00, 1000.32it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1048.20it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:   0%|          | 1/219 [00:00<00:33,  6.42it/s]Loading weights:  26%|██▋       | 58/219 [00:00<00:00, 261.36it/s]Loading weights:  41%|████      | 89/219 [00:00<00:00, 239.51it/s]Loading weights:  53%|█████▎    | 116/219 [00:00<00:00, 218.15it/s]Loading weights:  64%|██████▍   | 140/219 [00:00<00:00, 208.28it/s]Loading weights:  76%|███████▌  | 166/219 [00:00<00:00, 207.34it/s]Loading weights:  86%|████████▌ | 188/219 [00:00<00:00, 210.49it/s]Loading weights:  96%|█████████▌| 210/219 [00:01<00:00, 212.53it/s]Loading weights: 100%|██████████| 219/219 [00:01<00:00, 208.14it/s]
 TriLM_1.5B_Unpacked   ---- 1308.6M quant---- 206.7M rest----tied=False----  740.5 MB
-Loading weights:   0%|          | 0/273 [00:00<?, ?it/s]Loading weights:   8%|▊         | 22/273 [00:00<00:01, 202.64it/s]Loading weights:  34%|███▍      | 94/273 [00:00<00:00, 492.83it/s]Loading weights:  73%|███████▎  | 200/273 [00:00<00:00, 734.12it/s]Loading weights: 100%|██████████| 273/273 [00:00<00:00, 469.66it/s]
+Loading weights:   0%|          | 0/273 [00:00<?, ?it/s]Loading weights:   0%|          | 1/273 [00:00<00:55,  4.93it/s]Loading weights:  12%|█▏        | 33/273 [00:00<00:01, 133.73it/s]Loading weights:  19%|█▉        | 52/273 [00:00<00:01, 112.81it/s]Loading weights:  25%|██▍       | 67/273 [00:00<00:02, 101.85it/s]Loading weights:  31%|███       | 85/273 [00:00<00:01, 107.47it/s]Loading weights:  38%|███▊      | 103/273 [00:00<00:01, 115.94it/s]Loading weights:  42%|████▏     | 116/273 [00:01<00:01, 98.01it/s] Loading weights:  74%|███████▍  | 202/273 [00:01<00:00, 244.43it/s]Loading weights:  84%|████████▍ | 230/273 [00:01<00:00, 250.35it/s]Loading weights:  96%|█████████▋| 263/273 [00:01<00:00, 269.44it/s]Loading weights: 100%|██████████| 273/273 [00:01<00:00, 180.40it/s]
 TriLM_3.9B_Unpacked   ---- 3680.5M quant---- 311.6M rest----tied=False---- 1543.4 MB
-Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 7017.40it/s]
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 7114.49it/s]
 PTQ_99M               ----   48.2M quant----  51.5M rest----tied=False----  115.1 MB
-Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 7602.41it/s]
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 7671.46it/s]
 PTQ_190M              ----  113.2M quant----  77.3M rest----tied=False----  182.9 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7509.79it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7379.71it/s]
 PTQ_390M              ----  289.4M quant---- 103.1M rest----tied=False----  278.5 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7526.53it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7299.08it/s]
 PTQ_560M              ----  440.4M quant---- 128.8M rest----tied=False----  367.8 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7586.52it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7464.21it/s]
 PTQ_830M              ----  679.5M quant---- 154.6M rest----tied=False----  479.1 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7504.09it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7433.52it/s]
 PTQ_1.1B              ----  968.9M quant---- 180.8M rest----tied=False----  603.9 MB
-Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7267.55it/s]
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7218.88it/s]
 PTQ_1.5B              ---- 1308.6M quant---- 206.7M rest----tied=False----  740.5 MB
 ---------------- Analytical vs Empirical Results ----------------
                              alpha  alpha_hat  predicted_tokens_per_round  measured_tokens_per_round  alpha_gap  tpr_gap
@@ -570,3 +570,50 @@ TriLM   740MB ≈ FloatLM   2621MB  →  ratio 3.54x
   830M   FloatLM  1668.2MB 0.7459   TriLM  479.1MB 0.7016   delta -0.0443
   1.1B   FloatLM  2299.4MB 0.7569   TriLM  603.9MB 0.7191   delta -0.0378
   1.5B   FloatLM  3030.6MB 0.7675   TriLM  740.5MB 0.7327   delta -0.0348
+wrote table_alpha_full.tex
+wrote table_paired_gaps.tex
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    365MB  →  ratio 1.31x
+TriLM   368MB ≈ FloatLM    514MB  →  ratio 1.40x
+TriLM   479MB ≈ FloatLM    704MB  →  ratio 1.47x
+TriLM   604MB ≈ FloatLM    968MB  →  ratio 1.60x
+TriLM   740MB ≈ FloatLM   1289MB  →  ratio 1.74x
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    354MB  →  ratio 1.27x
+TriLM   368MB ≈ FloatLM    514MB  →  ratio 1.40x
+TriLM   479MB ≈ FloatLM    721MB  →  ratio 1.51x
+TriLM   604MB ≈ FloatLM   1001MB  →  ratio 1.66x
+TriLM   740MB ≈ FloatLM   1340MB  →  ratio 1.81x
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    322MB  →  ratio 1.16x
+TriLM   368MB ≈ FloatLM    473MB  →  ratio 1.29x
+TriLM   479MB ≈ FloatLM    682MB  →  ratio 1.42x
+TriLM   604MB ≈ FloatLM    936MB  →  ratio 1.55x
+TriLM   740MB ≈ FloatLM   1219MB  →  ratio 1.65x
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    413MB  →  ratio 1.48x
+TriLM   368MB ≈ FloatLM    604MB  →  ratio 1.64x
+TriLM   479MB ≈ FloatLM    990MB  →  ratio 2.07x
+TriLM   604MB ≈ FloatLM   1564MB  →  ratio 2.59x
+TriLM   740MB ≈ FloatLM   2621MB  →  ratio 3.54x
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    389MB  →  ratio 1.40x
+TriLM   368MB ≈ FloatLM    611MB  →  ratio 1.66x
+TriLM   479MB ≈ FloatLM    986MB  →  ratio 2.06x
+TriLM   604MB ≈ FloatLM   1505MB  →  ratio 2.49x
+TriLM   740MB ≈ FloatLM   2593MB  →  ratio 3.50x
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    377MB  →  ratio 1.35x
+TriLM   368MB ≈ FloatLM    595MB  →  ratio 1.62x
+TriLM   479MB ≈ FloatLM    940MB  →  ratio 1.96x
+TriLM   604MB ≈ FloatLM   1420MB  →  ratio 2.35x
+TriLM   740MB ≈ FloatLM   2397MB  →  ratio 3.24x
+wrote table_parity.tex
+wrote table_speedup.tex
+wrote table_validation.tex
