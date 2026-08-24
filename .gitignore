@@ -3,7 +3,10 @@ __pycache__/
 .vscode/
 mypy.ini
 .mypy_cache/
-data/
+data/alpha/
+data/empirical/
+data/targets/
+data/prompts.json
 .ruff.toml
 .ruff_cache
 ptq_models/

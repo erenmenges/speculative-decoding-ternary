@@ -1,0 +1,572 @@
+---------------- Raw Analytical Results ----------------
+                                            alpha   agree
+target              family  size_m domain                
+FloatLM_3.9B        FloatLM 99     chat    0.6644  0.6594
+                                   code    0.7190  0.7263
+                                   web     0.6126  0.5887
+                            190    chat    0.7023  0.6900
+                                   code    0.7515  0.7534
+                                   web     0.6559  0.6283
+                            390    chat    0.7474  0.7302
+                                   code    0.7867  0.7822
+                                   web     0.7098  0.6793
+                            560    chat    0.7625  0.7437
+                                   code    0.8006  0.7954
+                                   web     0.7263  0.6952
+                            830    chat    0.7810  0.7654
+                                   code    0.8137  0.8050
+                                   web     0.7459  0.7157
+                            1100   chat    0.7925  0.7757
+                                   code    0.8224  0.8141
+                                   web     0.7569  0.7251
+                            1500   chat    0.7998  0.7811
+                                   code    0.8283  0.8201
+                                   web     0.7675  0.7374
+                            3900   chat    0.9854  0.9837
+                                   code    0.9887  0.9873
+                                   web     0.9819  0.9775
+                    PTQ     99     chat    0.0106  0.0005
+                                   code    0.0048  0.0009
+                                   web     0.0188  0.0009
+                            190    chat    0.0291  0.0125
+                                   code    0.0153  0.0101
+                                   web     0.0396  0.0109
+                            390    chat    0.0391  0.0145
+                                   code    0.0223  0.0136
+                                   web     0.0647  0.0293
+                            560    chat    0.0276  0.0053
+                                   code    0.0151  0.0054
+                                   web     0.0424  0.0043
+                            830    chat    0.0578  0.0337
+                                   code    0.0311  0.0269
+                                   web     0.0809  0.0337
+                            1100   chat    0.0306  0.0129
+                                   code    0.0203  0.0126
+                                   web     0.0437  0.0096
+                            1500   chat    0.0530  0.0309
+                                   code    0.0361  0.0320
+                                   web     0.0823  0.0455
+                    TriLM   99     chat    0.5985  0.6038
+                                   code    0.6562  0.6750
+                                   web     0.5586  0.5374
+                            190    chat    0.6501  0.6445
+                                   code    0.7018  0.7124
+                                   web     0.6046  0.5805
+                            390    chat    0.6979  0.6852
+                                   code    0.7430  0.7452
+                                   web     0.6529  0.6249
+                            560    chat    0.7209  0.7045
+                                   code    0.7620  0.7607
+                                   web     0.6782  0.6471
+                            830    chat    0.7421  0.7249
+                                   code    0.7799  0.7747
+                                   web     0.7016  0.6696
+                            1100   chat    0.7573  0.7390
+                                   code    0.7933  0.7880
+                                   web     0.7191  0.6864
+                            1500   chat    0.7704  0.7518
+                                   code    0.8029  0.7930
+                                   web     0.7327  0.7010
+                            3900   chat    0.7991  0.7788
+                                   code    0.8264  0.8164
+                                   web     0.7643  0.7315
+TriLM_3.9B_Unpacked FloatLM 99     chat    0.6650  0.6529
+                                   code    0.7233  0.7336
+                                   web     0.6219  0.5913
+                            190    chat    0.7029  0.6855
+                                   code    0.7535  0.7572
+                                   web     0.6624  0.6289
+                            390    chat    0.7422  0.7213
+                                   code    0.7866  0.7859
+                                   web     0.7113  0.6789
+                            560    chat    0.7551  0.7307
+                                   code    0.7993  0.7966
+                                   web     0.7238  0.6891
+                            830    chat    0.7701  0.7447
+                                   code    0.8108  0.8065
+                                   web     0.7410  0.7052
+                            1100   chat    0.7788  0.7556
+                                   code    0.8175  0.8128
+                                   web     0.7493  0.7162
+                            1500   chat    0.7838  0.7594
+                                   code    0.8204  0.8155
+                                   web     0.7552  0.7219
+                            3900   chat    0.7944  0.7710
+                                   code    0.8293  0.8233
+                                   web     0.7634  0.7297
+                    PTQ     99     chat    0.0115  0.0006
+                                   code    0.0051  0.0007
+                                   web     0.0198  0.0009
+                            190    chat    0.0306  0.0126
+                                   code    0.0164  0.0107
+                                   web     0.0411  0.0113
+                            390    chat    0.0419  0.0165
+                                   code    0.0241  0.0138
+                                   web     0.0678  0.0289
+                            560    chat    0.0301  0.0065
+                                   code    0.0154  0.0057
+                                   web     0.0442  0.0044
+                            830    chat    0.0600  0.0342
+                                   code    0.0339  0.0261
+                                   web     0.0842  0.0338
+                            1100   chat    0.0337  0.0142
+                                   code    0.0200  0.0107
+                                   web     0.0454  0.0098
+                            1500   chat    0.0560  0.0312
+                                   code    0.0354  0.0317
+                                   web     0.0860  0.0474
+                    TriLM   99     chat    0.6046  0.6031
+                                   code    0.6650  0.6860
+                                   web     0.5703  0.5446
+                            190    chat    0.6558  0.6440
+                                   code    0.7106  0.7205
+                                   web     0.6178  0.5885
+                            390    chat    0.7040  0.6856
+                                   code    0.7530  0.7570
+                                   web     0.6679  0.6349
+                            560    chat    0.7285  0.7080
+                                   code    0.7739  0.7728
+                                   web     0.6936  0.6595
+                            830    chat    0.7501  0.7281
+                                   code    0.7927  0.7893
+                                   web     0.7191  0.6847
+                            1100   chat    0.7661  0.7429
+                                   code    0.8060  0.8014
+                                   web     0.7381  0.7055
+                            1500   chat    0.7809  0.7561
+                                   code    0.8179  0.8118
+                                   web     0.7521  0.7176
+                            3900   chat    0.9936  0.9918
+                                   code    0.9945  0.9938
+                                   web     0.9927  0.9909
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 11443.26it/s]
+FloatLM_99M           ----   48.2M quant----  51.5M rest----tied=False----  199.5 MB
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 4028.40it/s]
+FloatLM_190M          ----  113.2M quant----  77.3M rest----tied=False----  381.1 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 4018.34it/s]
+FloatLM_390M          ----  289.4M quant---- 103.1M rest----tied=False----  785.0 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 2818.82it/s]
+FloatLM_560M          ----  440.4M quant---- 128.8M rest----tied=False---- 1138.5 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  80%|████████  | 176/219 [00:00<00:00, 1754.21it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1857.88it/s]
+FloatLM_830M          ----  679.5M quant---- 154.6M rest----tied=False---- 1668.2 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  55%|█████▌    | 121/219 [00:00<00:00, 1180.24it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1311.19it/s]
+FloatLM_1.1B          ----  968.9M quant---- 180.8M rest----tied=False---- 2299.4 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  35%|███▍      | 76/219 [00:00<00:00, 751.31it/s]Loading weights:  87%|████████▋ | 190/219 [00:00<00:00, 977.60it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 971.57it/s]
+FloatLM_1.5B          ---- 1308.6M quant---- 206.7M rest----tied=False---- 3030.6 MB
+Loading weights:   0%|          | 0/273 [00:00<?, ?it/s]Loading weights:  11%|█▏        | 31/273 [00:00<00:00, 308.15it/s]Loading weights:  31%|███       | 85/273 [00:00<00:00, 433.56it/s]Loading weights:  53%|█████▎    | 146/273 [00:00<00:00, 510.93it/s]Loading weights:  77%|███████▋  | 211/273 [00:00<00:00, 564.38it/s]Loading weights:  98%|█████████▊| 268/273 [00:00<00:00, 381.71it/s]Loading weights: 100%|██████████| 273/273 [00:00<00:00, 424.15it/s]
+FloatLM_3.9B          ---- 3680.5M quant---- 311.6M rest----tied=False---- 7984.2 MB
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 3529.35it/s]
+TriLM_99M_Unpacked    ----   48.2M quant----  51.5M rest----tied=False----  115.1 MB
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 1828.47it/s]
+TriLM_190M_Unpacked   ----  113.2M quant----  77.3M rest----tied=False----  182.9 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  54%|█████▍    | 118/219 [00:00<00:00, 1177.91it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1430.74it/s]
+TriLM_390M_Unpacked   ----  289.4M quant---- 103.1M rest----tied=False----  278.5 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  31%|███       | 67/219 [00:00<00:00, 644.10it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1111.62it/s]
+TriLM_560M_Unpacked   ----  440.4M quant---- 128.8M rest----tied=False----  367.8 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  76%|███████▋  | 167/219 [00:00<00:00, 1651.06it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1799.29it/s]
+TriLM_830M_Unpacked   ----  679.5M quant---- 154.6M rest----tied=False----  479.1 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  55%|█████▌    | 121/219 [00:00<00:00, 1185.25it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1341.60it/s]
+TriLM_1.1B_Unpacked   ----  968.9M quant---- 180.8M rest----tied=False----  603.9 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:  35%|███▍      | 76/219 [00:00<00:00, 759.22it/s]Loading weights:  88%|████████▊ | 193/219 [00:00<00:00, 1000.32it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 1048.20it/s]
+TriLM_1.5B_Unpacked   ---- 1308.6M quant---- 206.7M rest----tied=False----  740.5 MB
+Loading weights:   0%|          | 0/273 [00:00<?, ?it/s]Loading weights:   8%|▊         | 22/273 [00:00<00:01, 202.64it/s]Loading weights:  34%|███▍      | 94/273 [00:00<00:00, 492.83it/s]Loading weights:  73%|███████▎  | 200/273 [00:00<00:00, 734.12it/s]Loading weights: 100%|██████████| 273/273 [00:00<00:00, 469.66it/s]
+TriLM_3.9B_Unpacked   ---- 3680.5M quant---- 311.6M rest----tied=False---- 1543.4 MB
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 7017.40it/s]
+PTQ_99M               ----   48.2M quant----  51.5M rest----tied=False----  115.1 MB
+Loading weights:   0%|          | 0/147 [00:00<?, ?it/s]Loading weights: 100%|██████████| 147/147 [00:00<00:00, 7602.41it/s]
+PTQ_190M              ----  113.2M quant----  77.3M rest----tied=False----  182.9 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7509.79it/s]
+PTQ_390M              ----  289.4M quant---- 103.1M rest----tied=False----  278.5 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7526.53it/s]
+PTQ_560M              ----  440.4M quant---- 128.8M rest----tied=False----  367.8 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7586.52it/s]
+PTQ_830M              ----  679.5M quant---- 154.6M rest----tied=False----  479.1 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7504.09it/s]
+PTQ_1.1B              ----  968.9M quant---- 180.8M rest----tied=False----  603.9 MB
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights: 100%|██████████| 219/219 [00:00<00:00, 7267.55it/s]
+PTQ_1.5B              ---- 1308.6M quant---- 206.7M rest----tied=False----  740.5 MB
+---------------- Analytical vs Empirical Results ----------------
+                             alpha  alpha_hat  predicted_tokens_per_round  measured_tokens_per_round  alpha_gap  tpr_gap
+draft               domain                                                                                              
+FloatLM_1.5B        chat    0.7983     0.7907                      3.6982                     3.6192    -0.0076  -0.0789
+                    code    0.8217     0.8201                      3.9712                     3.8955    -0.0016  -0.0758
+                    web     0.7725     0.7669                      3.4948                     3.4410    -0.0056  -0.0538
+FloatLM_560M        chat    0.7611     0.7534                      3.4009                     3.3285    -0.0076  -0.0723
+                    code    0.7956     0.7889                      3.7448                     3.6122    -0.0067  -0.1326
+                    web     0.7332     0.7325                      3.2047                     3.1835    -0.0007  -0.0212
+FloatLM_99M         chat    0.6626     0.6711                      2.7545                     2.7761     0.0085   0.0217
+                    code    0.7124     0.7050                      3.1272                     3.0081    -0.0074  -0.1191
+                    web     0.6215     0.6264                      2.5371                     2.5480     0.0049   0.0109
+PTQ_1.5B            chat    0.0525     0.0508                      1.0564                     1.0544    -0.0018  -0.0020
+                    code    0.0354     0.0356                      1.0375                     1.0377     0.0002   0.0002
+                    web     0.0791     0.0813                      1.0869                     1.0896     0.0022   0.0028
+PTQ_560M            chat    0.0274     0.0246                      1.0285                     1.0256    -0.0028  -0.0029
+                    code    0.0166     0.0165                      1.0172                     1.0171    -0.0001  -0.0001
+                    web     0.0399     0.0397                      1.0420                     1.0420    -0.0002   0.0000
+PTQ_99M             chat    0.0105     0.0098                      1.0107                     1.0100    -0.0007  -0.0007
+                    code    0.0049     0.0038                      1.0050                     1.0038    -0.0011  -0.0011
+                    web     0.0181     0.0184                      1.0186                     1.0189     0.0003   0.0004
+TriLM_1.5B_Unpacked chat    0.7681     0.7645                      3.4541                     3.4156    -0.0036  -0.0385
+                    code    0.7978     0.7950                      3.7627                     3.6974    -0.0028  -0.0653
+                    web     0.7392     0.7374                      3.2494                     3.2297    -0.0018  -0.0198
+TriLM_560M_Unpacked chat    0.7207     0.7193                      3.1124                     3.0773    -0.0014  -0.0351
+                    code    0.7571     0.7439                      3.4413                     3.2464    -0.0132  -0.1949
+                    web     0.6872     0.6845                      2.8997                     2.8718    -0.0027  -0.0279
+TriLM_99M_Unpacked  chat    0.5971     0.5942                      2.4152                     2.3739    -0.0029  -0.0413
+                    code    0.6502     0.6432                      2.7455                     2.6412    -0.0069  -0.1043
+                    web     0.5679     0.5666                      2.2692                     2.2565    -0.0014  -0.0127
+alpha gap      mean -0.0024  max|.| 0.0132
+tokens/rnd gap mean -0.0394  max|.| 0.1949
+--- speedup: FloatLM_3.9B / web (k=5) ---
+FloatLM    199.5MB  alpha 0.6126  speedup 2.17x
+FloatLM    381.1MB  alpha 0.6559  speedup 2.16x
+FloatLM    785.0MB  alpha 0.7098  speedup 2.01x
+FloatLM   1138.5MB  alpha 0.7263  speedup 1.82x
+FloatLM   1668.2MB  alpha 0.7459  speedup 1.59x
+FloatLM   2299.4MB  alpha 0.7569  speedup 1.37x
+FloatLM   3030.6MB  alpha 0.7675  speedup 1.18x
+PTQ        115.1MB  alpha 0.0188  speedup 0.95x
+PTQ        182.9MB  alpha 0.0396  speedup 0.93x
+PTQ        278.5MB  alpha 0.0647  speedup 0.91x
+PTQ        367.8MB  alpha 0.0424  speedup 0.85x
+PTQ        479.1MB  alpha 0.0809  speedup 0.84x
+PTQ        603.9MB  alpha 0.0437  speedup 0.76x
+PTQ        740.5MB  alpha 0.0823  speedup 0.74x
+TriLM      115.1MB  alpha 0.5586  speedup 2.05x
+TriLM      182.9MB  alpha 0.6046  speedup 2.16x
+TriLM      278.5MB  alpha 0.6529  speedup 2.26x
+TriLM      367.8MB  alpha 0.6782  speedup 2.28x
+TriLM      479.1MB  alpha 0.7016  speedup 2.27x
+TriLM      603.9MB  alpha 0.7191  speedup 2.23x
+TriLM      740.5MB  alpha 0.7327  speedup 2.16x
+--- speedup: TriLM_3.9B_Unpacked / web (k=5) ---
+FloatLM    199.5MB  alpha 0.6219  speedup 1.51x
+FloatLM    381.1MB  alpha 0.6624  speedup 1.21x
+FloatLM    785.0MB  alpha 0.7113  speedup 0.85x
+FloatLM   1138.5MB  alpha 0.7238  speedup 0.66x
+FloatLM   1668.2MB  alpha 0.7410  speedup 0.50x
+FloatLM   2299.4MB  alpha 0.7493  speedup 0.39x
+FloatLM   3030.6MB  alpha 0.7552  speedup 0.31x
+PTQ        115.1MB  alpha 0.0198  speedup 0.74x
+PTQ        182.9MB  alpha 0.0411  speedup 0.65x
+PTQ        278.5MB  alpha 0.0678  speedup 0.56x
+PTQ        367.8MB  alpha 0.0442  speedup 0.48x
+PTQ        479.1MB  alpha 0.0842  speedup 0.43x
+PTQ        603.9MB  alpha 0.0454  speedup 0.35x
+PTQ        740.5MB  alpha 0.0860  speedup 0.32x
+TriLM      115.1MB  alpha 0.5703  speedup 1.64x
+TriLM      182.9MB  alpha 0.6178  speedup 1.55x
+TriLM      278.5MB  alpha 0.6679  speedup 1.44x
+TriLM      367.8MB  alpha 0.6936  speedup 1.32x
+TriLM      479.1MB  alpha 0.7191  speedup 1.20x
+TriLM      603.9MB  alpha 0.7381  speedup 1.08x
+TriLM      740.5MB  alpha 0.7521  speedup 0.97x
+---------------- Cell CIs ----------------
+FloatLM_3.9B         FloatLM     99 chat  0.6644 [0.6572, 0.6716]  n=256
+FloatLM_3.9B         FloatLM     99 code  0.7190 [0.7072, 0.7298]  n=256
+FloatLM_3.9B         FloatLM     99 web   0.6126 [0.6064, 0.6182]  n=512
+FloatLM_3.9B         FloatLM    190 chat  0.7023 [0.6958, 0.7088]  n=256
+FloatLM_3.9B         FloatLM    190 code  0.7515 [0.7401, 0.7618]  n=256
+FloatLM_3.9B         FloatLM    190 web   0.6559 [0.6499, 0.6612]  n=512
+FloatLM_3.9B         FloatLM    390 chat  0.7474 [0.7416, 0.7533]  n=256
+FloatLM_3.9B         FloatLM    390 code  0.7867 [0.7761, 0.7965]  n=256
+FloatLM_3.9B         FloatLM    390 web   0.7098 [0.7046, 0.7146]  n=512
+FloatLM_3.9B         FloatLM    560 chat  0.7625 [0.7571, 0.7681]  n=256
+FloatLM_3.9B         FloatLM    560 code  0.8006 [0.7905, 0.8095]  n=256
+FloatLM_3.9B         FloatLM    560 web   0.7263 [0.7213, 0.7311]  n=512
+FloatLM_3.9B         FloatLM    830 chat  0.7810 [0.7758, 0.7864]  n=256
+FloatLM_3.9B         FloatLM    830 code  0.8137 [0.8043, 0.8223]  n=256
+FloatLM_3.9B         FloatLM    830 web   0.7459 [0.7410, 0.7505]  n=512
+FloatLM_3.9B         FloatLM   1100 chat  0.7925 [0.7875, 0.7976]  n=256
+FloatLM_3.9B         FloatLM   1100 code  0.8224 [0.8130, 0.8308]  n=256
+FloatLM_3.9B         FloatLM   1100 web   0.7569 [0.7521, 0.7615]  n=512
+FloatLM_3.9B         FloatLM   1500 chat  0.7998 [0.7948, 0.8048]  n=256
+FloatLM_3.9B         FloatLM   1500 code  0.8283 [0.8189, 0.8367]  n=256
+FloatLM_3.9B         FloatLM   1500 web   0.7675 [0.7628, 0.7721]  n=512
+FloatLM_3.9B         PTQ         99 chat  0.0106 [0.0095, 0.0117]  n=256
+FloatLM_3.9B         PTQ         99 code  0.0048 [0.0043, 0.0055]  n=256
+FloatLM_3.9B         PTQ         99 web   0.0188 [0.0179, 0.0198]  n=512
+FloatLM_3.9B         PTQ        190 chat  0.0291 [0.0268, 0.0317]  n=256
+FloatLM_3.9B         PTQ        190 code  0.0153 [0.0137, 0.0171]  n=256
+FloatLM_3.9B         PTQ        190 web   0.0396 [0.0379, 0.0415]  n=512
+FloatLM_3.9B         PTQ        390 chat  0.0391 [0.0364, 0.0419]  n=256
+FloatLM_3.9B         PTQ        390 code  0.0223 [0.0202, 0.0247]  n=256
+FloatLM_3.9B         PTQ        390 web   0.0647 [0.0625, 0.0670]  n=512
+FloatLM_3.9B         PTQ        560 chat  0.0276 [0.0257, 0.0295]  n=256
+FloatLM_3.9B         PTQ        560 code  0.0151 [0.0136, 0.0169]  n=256
+FloatLM_3.9B         PTQ        560 web   0.0424 [0.0406, 0.0440]  n=512
+FloatLM_3.9B         PTQ        830 chat  0.0578 [0.0544, 0.0612]  n=256
+FloatLM_3.9B         PTQ        830 code  0.0311 [0.0286, 0.0335]  n=256
+FloatLM_3.9B         PTQ        830 web   0.0809 [0.0788, 0.0830]  n=512
+FloatLM_3.9B         PTQ       1100 chat  0.0306 [0.0285, 0.0329]  n=256
+FloatLM_3.9B         PTQ       1100 code  0.0203 [0.0183, 0.0226]  n=256
+FloatLM_3.9B         PTQ       1100 web   0.0437 [0.0422, 0.0453]  n=512
+FloatLM_3.9B         PTQ       1500 chat  0.0530 [0.0497, 0.0562]  n=256
+FloatLM_3.9B         PTQ       1500 code  0.0361 [0.0331, 0.0395]  n=256
+FloatLM_3.9B         PTQ       1500 web   0.0823 [0.0799, 0.0847]  n=512
+FloatLM_3.9B         TriLM       99 chat  0.5985 [0.5910, 0.6063]  n=256
+FloatLM_3.9B         TriLM       99 code  0.6562 [0.6438, 0.6679]  n=256
+FloatLM_3.9B         TriLM       99 web   0.5586 [0.5529, 0.5639]  n=512
+FloatLM_3.9B         TriLM      190 chat  0.6501 [0.6429, 0.6575]  n=256
+FloatLM_3.9B         TriLM      190 code  0.7018 [0.6898, 0.7128]  n=256
+FloatLM_3.9B         TriLM      190 web   0.6046 [0.5988, 0.6100]  n=512
+FloatLM_3.9B         TriLM      390 chat  0.6979 [0.6914, 0.7044]  n=256
+FloatLM_3.9B         TriLM      390 code  0.7430 [0.7315, 0.7534]  n=256
+FloatLM_3.9B         TriLM      390 web   0.6529 [0.6473, 0.6581]  n=512
+FloatLM_3.9B         TriLM      560 chat  0.7209 [0.7149, 0.7272]  n=256
+FloatLM_3.9B         TriLM      560 code  0.7620 [0.7512, 0.7720]  n=256
+FloatLM_3.9B         TriLM      560 web   0.6782 [0.6727, 0.6834]  n=512
+FloatLM_3.9B         TriLM      830 chat  0.7421 [0.7363, 0.7480]  n=256
+FloatLM_3.9B         TriLM      830 code  0.7799 [0.7696, 0.7896]  n=256
+FloatLM_3.9B         TriLM      830 web   0.7016 [0.6962, 0.7066]  n=512
+FloatLM_3.9B         TriLM     1100 chat  0.7573 [0.7518, 0.7629]  n=256
+FloatLM_3.9B         TriLM     1100 code  0.7933 [0.7832, 0.8024]  n=256
+FloatLM_3.9B         TriLM     1100 web   0.7191 [0.7139, 0.7239]  n=512
+FloatLM_3.9B         TriLM     1500 chat  0.7704 [0.7651, 0.7759]  n=256
+FloatLM_3.9B         TriLM     1500 code  0.8029 [0.7931, 0.8118]  n=256
+FloatLM_3.9B         TriLM     1500 web   0.7327 [0.7275, 0.7374]  n=512
+TriLM_3.9B_Unpacked  FloatLM     99 chat  0.6650 [0.6569, 0.6734]  n=256
+TriLM_3.9B_Unpacked  FloatLM     99 code  0.7233 [0.7135, 0.7334]  n=256
+TriLM_3.9B_Unpacked  FloatLM     99 web   0.6219 [0.6166, 0.6267]  n=512
+TriLM_3.9B_Unpacked  FloatLM    190 chat  0.7029 [0.6954, 0.7106]  n=256
+TriLM_3.9B_Unpacked  FloatLM    190 code  0.7535 [0.7444, 0.7627]  n=256
+TriLM_3.9B_Unpacked  FloatLM    190 web   0.6624 [0.6576, 0.6669]  n=512
+TriLM_3.9B_Unpacked  FloatLM    390 chat  0.7422 [0.7352, 0.7491]  n=256
+TriLM_3.9B_Unpacked  FloatLM    390 code  0.7866 [0.7777, 0.7953]  n=256
+TriLM_3.9B_Unpacked  FloatLM    390 web   0.7113 [0.7070, 0.7153]  n=512
+TriLM_3.9B_Unpacked  FloatLM    560 chat  0.7551 [0.7483, 0.7618]  n=256
+TriLM_3.9B_Unpacked  FloatLM    560 code  0.7993 [0.7910, 0.8075]  n=256
+TriLM_3.9B_Unpacked  FloatLM    560 web   0.7238 [0.7194, 0.7278]  n=512
+TriLM_3.9B_Unpacked  FloatLM    830 chat  0.7701 [0.7638, 0.7764]  n=256
+TriLM_3.9B_Unpacked  FloatLM    830 code  0.8108 [0.8030, 0.8186]  n=256
+TriLM_3.9B_Unpacked  FloatLM    830 web   0.7410 [0.7367, 0.7449]  n=512
+TriLM_3.9B_Unpacked  FloatLM   1100 chat  0.7788 [0.7725, 0.7851]  n=256
+TriLM_3.9B_Unpacked  FloatLM   1100 code  0.8175 [0.8096, 0.8249]  n=256
+TriLM_3.9B_Unpacked  FloatLM   1100 web   0.7493 [0.7449, 0.7532]  n=512
+TriLM_3.9B_Unpacked  FloatLM   1500 chat  0.7838 [0.7777, 0.7899]  n=256
+TriLM_3.9B_Unpacked  FloatLM   1500 code  0.8204 [0.8129, 0.8281]  n=256
+TriLM_3.9B_Unpacked  FloatLM   1500 web   0.7552 [0.7508, 0.7593]  n=512
+TriLM_3.9B_Unpacked  PTQ         99 chat  0.0115 [0.0103, 0.0126]  n=256
+TriLM_3.9B_Unpacked  PTQ         99 code  0.0051 [0.0045, 0.0057]  n=256
+TriLM_3.9B_Unpacked  PTQ         99 web   0.0198 [0.0188, 0.0209]  n=512
+TriLM_3.9B_Unpacked  PTQ        190 chat  0.0306 [0.0284, 0.0331]  n=256
+TriLM_3.9B_Unpacked  PTQ        190 code  0.0164 [0.0147, 0.0182]  n=256
+TriLM_3.9B_Unpacked  PTQ        190 web   0.0411 [0.0393, 0.0431]  n=512
+TriLM_3.9B_Unpacked  PTQ        390 chat  0.0419 [0.0389, 0.0451]  n=256
+TriLM_3.9B_Unpacked  PTQ        390 code  0.0241 [0.0218, 0.0264]  n=256
+TriLM_3.9B_Unpacked  PTQ        390 web   0.0678 [0.0655, 0.0702]  n=512
+TriLM_3.9B_Unpacked  PTQ        560 chat  0.0301 [0.0281, 0.0322]  n=256
+TriLM_3.9B_Unpacked  PTQ        560 code  0.0154 [0.0141, 0.0168]  n=256
+TriLM_3.9B_Unpacked  PTQ        560 web   0.0442 [0.0423, 0.0460]  n=512
+TriLM_3.9B_Unpacked  PTQ        830 chat  0.0600 [0.0567, 0.0635]  n=256
+TriLM_3.9B_Unpacked  PTQ        830 code  0.0339 [0.0313, 0.0365]  n=256
+TriLM_3.9B_Unpacked  PTQ        830 web   0.0842 [0.0822, 0.0863]  n=512
+TriLM_3.9B_Unpacked  PTQ       1100 chat  0.0337 [0.0313, 0.0363]  n=256
+TriLM_3.9B_Unpacked  PTQ       1100 code  0.0200 [0.0183, 0.0218]  n=256
+TriLM_3.9B_Unpacked  PTQ       1100 web   0.0454 [0.0439, 0.0470]  n=512
+TriLM_3.9B_Unpacked  PTQ       1500 chat  0.0560 [0.0528, 0.0594]  n=256
+TriLM_3.9B_Unpacked  PTQ       1500 code  0.0354 [0.0329, 0.0382]  n=256
+TriLM_3.9B_Unpacked  PTQ       1500 web   0.0860 [0.0837, 0.0883]  n=512
+TriLM_3.9B_Unpacked  TriLM       99 chat  0.6046 [0.5964, 0.6128]  n=256
+TriLM_3.9B_Unpacked  TriLM       99 code  0.6650 [0.6540, 0.6759]  n=256
+TriLM_3.9B_Unpacked  TriLM       99 web   0.5703 [0.5657, 0.5747]  n=512
+TriLM_3.9B_Unpacked  TriLM      190 chat  0.6558 [0.6480, 0.6639]  n=256
+TriLM_3.9B_Unpacked  TriLM      190 code  0.7106 [0.7005, 0.7207]  n=256
+TriLM_3.9B_Unpacked  TriLM      190 web   0.6178 [0.6132, 0.6220]  n=512
+TriLM_3.9B_Unpacked  TriLM      390 chat  0.7040 [0.6969, 0.7113]  n=256
+TriLM_3.9B_Unpacked  TriLM      390 code  0.7530 [0.7440, 0.7622]  n=256
+TriLM_3.9B_Unpacked  TriLM      390 web   0.6679 [0.6633, 0.6722]  n=512
+TriLM_3.9B_Unpacked  TriLM      560 chat  0.7285 [0.7218, 0.7354]  n=256
+TriLM_3.9B_Unpacked  TriLM      560 code  0.7739 [0.7650, 0.7828]  n=256
+TriLM_3.9B_Unpacked  TriLM      560 web   0.6936 [0.6891, 0.6976]  n=512
+TriLM_3.9B_Unpacked  TriLM      830 chat  0.7501 [0.7436, 0.7567]  n=256
+TriLM_3.9B_Unpacked  TriLM      830 code  0.7927 [0.7847, 0.8009]  n=256
+TriLM_3.9B_Unpacked  TriLM      830 web   0.7191 [0.7148, 0.7231]  n=512
+TriLM_3.9B_Unpacked  TriLM     1100 chat  0.7661 [0.7598, 0.7723]  n=256
+TriLM_3.9B_Unpacked  TriLM     1100 code  0.8060 [0.7980, 0.8138]  n=256
+TriLM_3.9B_Unpacked  TriLM     1100 web   0.7381 [0.7341, 0.7418]  n=512
+TriLM_3.9B_Unpacked  TriLM     1500 chat  0.7809 [0.7751, 0.7869]  n=256
+TriLM_3.9B_Unpacked  TriLM     1500 code  0.8179 [0.8102, 0.8255]  n=256
+TriLM_3.9B_Unpacked  TriLM     1500 web   0.7521 [0.7481, 0.7558]  n=512
+---------------- Paired Gap CIs ----------------
+FloatLM_3.9B         web   99M    -0.0540 [-0.0582, -0.0501]
+FloatLM_3.9B         web   190M   -0.0513 [-0.0547, -0.0488]
+FloatLM_3.9B         web   390M   -0.0568 [-0.0598, -0.0545]
+FloatLM_3.9B         web   560M   -0.0481 [-0.0514, -0.0457]
+FloatLM_3.9B         web   830M   -0.0443 [-0.0473, -0.0420]
+FloatLM_3.9B         web   1.1B   -0.0378 [-0.0403, -0.0358]
+FloatLM_3.9B         web   1.5B   -0.0348 [-0.0370, -0.0330]
+FloatLM_3.9B         chat  99M    -0.0659 [-0.0681, -0.0635]
+FloatLM_3.9B         chat  190M   -0.0522 [-0.0545, -0.0494]
+FloatLM_3.9B         chat  390M   -0.0495 [-0.0511, -0.0478]
+FloatLM_3.9B         chat  560M   -0.0416 [-0.0432, -0.0400]
+FloatLM_3.9B         chat  830M   -0.0390 [-0.0406, -0.0374]
+FloatLM_3.9B         chat  1.1B   -0.0352 [-0.0368, -0.0337]
+FloatLM_3.9B         chat  1.5B   -0.0293 [-0.0306, -0.0281]
+FloatLM_3.9B         code  99M    -0.0628 [-0.0654, -0.0601]
+FloatLM_3.9B         code  190M   -0.0497 [-0.0524, -0.0472]
+FloatLM_3.9B         code  390M   -0.0437 [-0.0460, -0.0415]
+FloatLM_3.9B         code  560M   -0.0386 [-0.0406, -0.0364]
+FloatLM_3.9B         code  830M   -0.0339 [-0.0357, -0.0322]
+FloatLM_3.9B         code  1.1B   -0.0291 [-0.0308, -0.0272]
+FloatLM_3.9B         code  1.5B   -0.0254 [-0.0270, -0.0237]
+TriLM_3.9B_Unpacked  web   99M    -0.0515 [-0.0550, -0.0485]
+TriLM_3.9B_Unpacked  web   190M   -0.0446 [-0.0464, -0.0430]
+TriLM_3.9B_Unpacked  web   390M   -0.0434 [-0.0447, -0.0422]
+TriLM_3.9B_Unpacked  web   560M   -0.0302 [-0.0315, -0.0290]
+TriLM_3.9B_Unpacked  web   830M   -0.0219 [-0.0230, -0.0208]
+TriLM_3.9B_Unpacked  web   1.1B   -0.0112 [-0.0123, -0.0100]
+TriLM_3.9B_Unpacked  web   1.5B   -0.0031 [-0.0045, -0.0016]
+TriLM_3.9B_Unpacked  chat  99M    -0.0605 [-0.0627, -0.0582]
+TriLM_3.9B_Unpacked  chat  190M   -0.0470 [-0.0488, -0.0452]
+TriLM_3.9B_Unpacked  chat  390M   -0.0381 [-0.0397, -0.0366]
+TriLM_3.9B_Unpacked  chat  560M   -0.0266 [-0.0280, -0.0251]
+TriLM_3.9B_Unpacked  chat  830M   -0.0200 [-0.0212, -0.0188]
+TriLM_3.9B_Unpacked  chat  1.1B   -0.0127 [-0.0139, -0.0115]
+TriLM_3.9B_Unpacked  chat  1.5B   -0.0028 [-0.0039, -0.0017]
+TriLM_3.9B_Unpacked  code  99M    -0.0582 [-0.0607, -0.0558]
+TriLM_3.9B_Unpacked  code  190M   -0.0429 [-0.0452, -0.0406]
+TriLM_3.9B_Unpacked  code  390M   -0.0335 [-0.0354, -0.0316]
+TriLM_3.9B_Unpacked  code  560M   -0.0254 [-0.0269, -0.0240]
+TriLM_3.9B_Unpacked  code  830M   -0.0181 [-0.0194, -0.0167]
+TriLM_3.9B_Unpacked  code  1.1B   -0.0115 [-0.0129, -0.0100]
+TriLM_3.9B_Unpacked  code  1.5B   -0.0025 [-0.0040, -0.0009]
+---------------- Parity ratios ----------------
+--- FloatLM_3.9B / web (params) ---
+TriLM    99M outside the grid, skipped
+TriLM   190M outside the grid, skipped
+TriLM   390M ≈ FloatLM    182M  →  ratio 0.47x
+TriLM   560M ≈ FloatLM    256M  →  ratio 0.46x
+TriLM   830M ≈ FloatLM    350M  →  ratio 0.42x
+TriLM  1100M ≈ FloatLM    478M  →  ratio 0.43x
+TriLM  1500M ≈ FloatLM    636M  →  ratio 0.42x
+--- FloatLM_3.9B / web (memory) ---
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    365MB  →  ratio 1.31x
+TriLM   368MB ≈ FloatLM    514MB  →  ratio 1.40x
+TriLM   479MB ≈ FloatLM    704MB  →  ratio 1.47x
+TriLM   604MB ≈ FloatLM    968MB  →  ratio 1.60x
+TriLM   740MB ≈ FloatLM   1289MB  →  ratio 1.74x
+--- FloatLM_3.9B / chat (params) ---
+TriLM    99M outside the grid, skipped
+TriLM   190M outside the grid, skipped
+TriLM   390M ≈ FloatLM    176M  →  ratio 0.45x
+TriLM   560M ≈ FloatLM    256M  →  ratio 0.46x
+TriLM   830M ≈ FloatLM    358M  →  ratio 0.43x
+TriLM  1100M ≈ FloatLM    494M  →  ratio 0.45x
+TriLM  1500M ≈ FloatLM    662M  →  ratio 0.44x
+--- FloatLM_3.9B / chat (memory) ---
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    354MB  →  ratio 1.27x
+TriLM   368MB ≈ FloatLM    514MB  →  ratio 1.40x
+TriLM   479MB ≈ FloatLM    721MB  →  ratio 1.51x
+TriLM   604MB ≈ FloatLM   1001MB  →  ratio 1.66x
+TriLM   740MB ≈ FloatLM   1340MB  →  ratio 1.81x
+--- FloatLM_3.9B / code (params) ---
+TriLM    99M outside the grid, skipped
+TriLM   190M outside the grid, skipped
+TriLM   390M ≈ FloatLM    160M  →  ratio 0.41x
+TriLM   560M ≈ FloatLM    236M  →  ratio 0.42x
+TriLM   830M ≈ FloatLM    339M  →  ratio 0.41x
+TriLM  1100M ≈ FloatLM    463M  →  ratio 0.42x
+TriLM  1500M ≈ FloatLM    601M  →  ratio 0.40x
+--- FloatLM_3.9B / code (memory) ---
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    322MB  →  ratio 1.16x
+TriLM   368MB ≈ FloatLM    473MB  →  ratio 1.29x
+TriLM   479MB ≈ FloatLM    682MB  →  ratio 1.42x
+TriLM   604MB ≈ FloatLM    936MB  →  ratio 1.55x
+TriLM   740MB ≈ FloatLM   1219MB  →  ratio 1.65x
+--- TriLM_3.9B_Unpacked / web (params) ---
+TriLM    99M outside the grid, skipped
+TriLM   190M outside the grid, skipped
+TriLM   390M ≈ FloatLM    206M  →  ratio 0.53x
+TriLM   560M ≈ FloatLM    301M  →  ratio 0.54x
+TriLM   830M ≈ FloatLM    489M  →  ratio 0.59x
+TriLM  1100M ≈ FloatLM    777M  →  ratio 0.71x
+TriLM  1500M ≈ FloatLM   1274M  →  ratio 0.85x
+--- TriLM_3.9B_Unpacked / web (memory) ---
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    413MB  →  ratio 1.48x
+TriLM   368MB ≈ FloatLM    604MB  →  ratio 1.64x
+TriLM   479MB ≈ FloatLM    990MB  →  ratio 2.07x
+TriLM   604MB ≈ FloatLM   1564MB  →  ratio 2.59x
+TriLM   740MB ≈ FloatLM   2621MB  →  ratio 3.54x
+--- TriLM_3.9B_Unpacked / chat (params) ---
+TriLM    99M outside the grid, skipped
+TriLM   190M outside the grid, skipped
+TriLM   390M ≈ FloatLM    194M  →  ratio 0.50x
+TriLM   560M ≈ FloatLM    304M  →  ratio 0.54x
+TriLM   830M ≈ FloatLM    487M  →  ratio 0.59x
+TriLM  1100M ≈ FloatLM    747M  →  ratio 0.68x
+TriLM  1500M ≈ FloatLM   1259M  →  ratio 0.84x
+--- TriLM_3.9B_Unpacked / chat (memory) ---
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    389MB  →  ratio 1.40x
+TriLM   368MB ≈ FloatLM    611MB  →  ratio 1.66x
+TriLM   479MB ≈ FloatLM    986MB  →  ratio 2.06x
+TriLM   604MB ≈ FloatLM   1505MB  →  ratio 2.49x
+TriLM   740MB ≈ FloatLM   2593MB  →  ratio 3.50x
+--- TriLM_3.9B_Unpacked / code (params) ---
+TriLM    99M outside the grid, skipped
+TriLM   190M outside the grid, skipped
+TriLM   390M ≈ FloatLM    188M  →  ratio 0.48x
+TriLM   560M ≈ FloatLM    296M  →  ratio 0.53x
+TriLM   830M ≈ FloatLM    465M  →  ratio 0.56x
+TriLM  1100M ≈ FloatLM    703M  →  ratio 0.64x
+TriLM  1500M ≈ FloatLM   1152M  →  ratio 0.77x
+--- TriLM_3.9B_Unpacked / code (memory) ---
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    377MB  →  ratio 1.35x
+TriLM   368MB ≈ FloatLM    595MB  →  ratio 1.62x
+TriLM   479MB ≈ FloatLM    940MB  →  ratio 1.96x
+TriLM   604MB ≈ FloatLM   1420MB  →  ratio 2.35x
+TriLM   740MB ≈ FloatLM   2397MB  →  ratio 3.24x
+---------------- USEFUL SUMMARY FOR ME ----------------
+
+=== FloatLM_3.9B / web ===
+  paired gap 99M   -0.0540 [-0.0582, -0.0501]
+  paired gap 1.5B  -0.0348 [-0.0370, -0.0330]
+  memory parity:
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    365MB  →  ratio 1.31x
+TriLM   368MB ≈ FloatLM    514MB  →  ratio 1.40x
+TriLM   479MB ≈ FloatLM    704MB  →  ratio 1.47x
+TriLM   604MB ≈ FloatLM    968MB  →  ratio 1.60x
+TriLM   740MB ≈ FloatLM   1289MB  →  ratio 1.74x
+
+=== TriLM_3.9B_Unpacked / web ===
+  paired gap 99M   -0.0515 [-0.0550, -0.0485]
+  paired gap 1.5B  -0.0031 [-0.0045, -0.0016]
+  memory parity:
+TriLM   115MB outside the grid, skipped
+TriLM   183MB outside the grid, skipped
+TriLM   278MB ≈ FloatLM    413MB  →  ratio 1.48x
+TriLM   368MB ≈ FloatLM    604MB  →  ratio 1.64x
+TriLM   479MB ≈ FloatLM    990MB  →  ratio 2.07x
+TriLM   604MB ≈ FloatLM   1564MB  →  ratio 2.59x
+TriLM   740MB ≈ FloatLM   2621MB  →  ratio 3.54x
+
+=== PTQ vs TriLM, matched footprint (web, FloatLM_3.9B) ===
+  99M    115.1 MB   TriLM 0.5586   PTQ 0.0188
+  1.5B   740.5 MB   TriLM 0.7327   PTQ 0.0823
+
+=== validation ===
+  alpha gap      mean -0.0024  max|.| 0.0132
+  tokens/rnd gap mean -0.0394  max|.| 0.1949
+
+=== Fig 1: web, FloatLM_3.9B target ===
+  99M    FloatLM   199.5MB 0.6126   TriLM  115.1MB 0.5586   delta -0.0540
+  190M   FloatLM   381.1MB 0.6559   TriLM  182.9MB 0.6046   delta -0.0513
+  390M   FloatLM   785.0MB 0.7098   TriLM  278.5MB 0.6529   delta -0.0568
+  560M   FloatLM  1138.5MB 0.7263   TriLM  367.8MB 0.6782   delta -0.0481
+  830M   FloatLM  1668.2MB 0.7459   TriLM  479.1MB 0.7016   delta -0.0443
+  1.1B   FloatLM  2299.4MB 0.7569   TriLM  603.9MB 0.7191   delta -0.0378
+  1.5B   FloatLM  3030.6MB 0.7675   TriLM  740.5MB 0.7327   delta -0.0348
