@@ -1,7 +1,7 @@
 # Speculative Decoding with Ternary Drafts
 This experiment explores the viability of using ternary models as draft models against FP16 and ternary target models. I tested the models of [SpectraSuite](https://huggingface.co/SpectraSuite) to see the memory footprint and acceptance rate ($\alpha$) difference and calculate a theoretical speedup ratio. I also validated the analysis with an actual end-to-end speculative decoding pipeline. Ternary models did much better than I expected.
 
-I submitted to a NeurIPS 2026 workshop (double-blind, can't state which) and published the preprint on arXiv. 
+I submitted this to a major ML conference's workshop (double-blind, can't state which) and published the preprint on arXiv. 
 I **strongly** recommend you look at the preprint instead of reading the results and setup from this page. Preprint: {PLACEHOLDER FOR NOW}.
 
 ## How Ternary Works
