@@ -11,5 +11,5 @@ data/prompts.json
 .ruff.toml
 .ruff_cache
 ptq_models/
-.DS_store
+.DS_Store
 paper.md
