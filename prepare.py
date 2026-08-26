@@ -105,6 +105,7 @@ def save_prompts(prompts: list[dict]):
 
 
 if __name__ == "__main__":
+    download_models()
     config.DATA_DIR.mkdir(parents=True, exist_ok=True)
     tokenizer = AutoTokenizer.from_pretrained(config.TOKENIZER_ID)
 

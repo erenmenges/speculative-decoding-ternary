@@ -1,29 +1,29 @@
-# Should Your Draft Model be Ternary?
+# Should Your Draft Model Be Ternary?
 # Abstract
-Speculative decoding speeds up LLM inference, and on memory-bound devices, the speedup is dependent on the draft model’s memory footprint. Using ternary models as draft models, which are smaller in memory footprint, remains untested because comparing FP16 and ternary QAT models requires training both models identically apart from precision. We use SpectraSuite to measure and compare the acceptance rate of 21 draft models spanning FP16, ternary-via-QAT, and ternary-via-PTQ against two 3.9B targets across 3 domains. We validate the analysis against end-to-end speculative decoding with $k=5$. We find that an FP16 draft needs $1.74\times$ as much memory to match the best ternary draft's acceptance rate. We also find that the ternary-draft penalty at matched parameters depends on the target's precision: at the largest drafts (1.5B, web domain), it nearly vanishes against a ternary target ($−0.0031$) while remaining substantial against an FP16 target ($−0.0348$). Despite being identical to its QAT counterpart in architecture, parameter count, and memory footprint (1.5B, web domain), PTQ results in an acceptance rate of $0.0823$ compared to the QAT's $0.7327$. This degradation makes speculative decoding with PTQ slower ($0.74\times$) than not using speculative decoding.
+Speculative decoding speeds up LLM inference, and on memory-bound devices, the speedup depends on the draft model’s memory footprint. Ternary models occupy far less memory, but their use as draft models remains untested because comparing FP16 and ternary QAT models requires training both models identically apart from precision. We measure and compare the acceptance rate of 21 draft models spanning FP16, ternary-via-QAT, and ternary-via-PTQ against two 3.9B targets across three domains, using models from SpectraSuite. We validate the analysis against end-to-end speculative decoding with draft length $k=5$. We find that an FP16 draft needs $1.74\times$ as much memory to match the best ternary draft's acceptance rate (FP16 target, web domain). Additionally, we find that the ternary-draft penalty at matched parameters depends on the target's precision: at the largest drafts (1.5B, web domain), it nearly vanishes against a ternary target ($−0.0031$) while remaining substantial against an FP16 target ($−0.0348$). Despite being identical to its QAT counterpart in architecture, parameter count, and memory footprint (1.5B, web domain), the PTQ model attains an acceptance rate of $0.0823$ compared to the QAT model's $0.7327$. This degradation makes speculative decoding with PTQ slower ($0.74\times$) than standard autoregressive decoding.
 
 
 # 1 Introduction
-LLM inference is expensive and slow, especially in consumer devices. A technique called “Speculative Decoding” enables faster inference for no output quality loss, using the elegant technique of having a smaller “draft” model constantly generate k sequential predictions cheaply and the main model, the “target”, scoring those predictions in one forward pass, instead of k passes. This means, in the best scenario where the draft model generates excellent tokens, the target model “generates” k+1 tokens in one forward pass, instead of generating only one token. 
+LLM inference is costly, particularly on consumer devices. Speculative decoding enables faster inference with no output quality loss [Leviathan et al., 2023; Chen et al., 2023]. It uses a smaller, cheaper draft model to sequentially generate $k$ predictions. The target model scores those predictions in one forward pass, instead of $k$ passes. In the best scenario where the draft model generates the same prediction distribution as the target model, the target model generates $k+1$ tokens in one forward pass, instead of generating only one token. 
 
-Especially in consumer devices, which are usually memory-bandwidth-bound, the speedup is limited by draft models’ footprint in memory. The field has techniques for making models take up less space in memory for a small quality loss. We decided to test one of those techniques, called Quantization-Aware Training (QAT) with ternary weights, to see if it actually speeds up speculative decoding.
+Especially on consumer devices, which are typically memory-bandwidth-bound, the speedup is limited by the memory footprint of draft models. Quantization reduces a model's memory footprint at a small cost in quality. We evaluate one such technique, ternary Quantization-Aware Training (QAT), to determine whether it speeds up speculative decoding.
 
-To our knowledge, no controlled comparison like this exists, since comparing ternary models and higher-precision models such as FP16 models requires the models to have identical architecture, tokenizer, and training sets. This was made possible by SpectraSuite, in which researchers released pretrained models both in FP16 and ternary, identical in almost every way, paving the way for comparison.
+To our knowledge, no controlled comparison between FP16 and ternary QAT draft models exists. Comparing ternary models and higher-precision models such as FP16 models requires the models to have identical architecture, tokenizer, and training sets, which entails substantial pretraining from scratch. The controlled comparison was made possible by SpectraSuite [Kaushal et al., 2024]. The SpectraSuite family includes matched FP16 and ternary-QAT variants, identical in every way except training pipeline and precision.
 
-We took SpectraSuite’s FP16 and ternary models, and tested their speculative decoding capabilities, both analytically and empirically. We also tried a technique called Post-Training Quantization (PTQ) on the FP16 models to see whether the speedups come from the models being ternary themselves, or from the way models were trained.
+We evaluate the FP16 and ternary QAT models of SpectraSuite as draft models, both analytically and empirically. Moreover, we apply Post-Training Quantization (PTQ) to the FP16 models to isolate the effect of quantizing during or after training.
 
-We found that the ternary models performed better or similar in comparison to the FP16 models at equal or smaller memory footprint where the two families' memory ranges overlap. We also found out that against a ternary target, the cost of using a ternary draft nearly vanishes, while against a FP16 target it stays substantial. Lastly, we found that naive absmean RTN PTQ absolutely collapses the model, and causes speculative decoding to be actually slower.
+Within the 200–740 MB range where the two families overlap, ternary drafts match or exceed FP16 acceptance rates at equal or smaller footprints. Additionally, we find that against a ternary target, the penalty of using a ternary draft nearly vanishes ($0.0031$), while against an FP16 target it stays substantial ($0.0348$) (1.5B, web domain). Finally, we find that naive ternary PTQ collapses the model and makes speculative decoding slower than autoregressive decoding ($0.74\times$), whereas ternary QAT produces usable draft models.
 
-# 2 Setup
-We evaluate the models of the SpectraSuite family. The chosen models range from 99M to 3.9B parameters. We use models from two sub-families: FloatLM, which is trained with FP16 precision, and TriLM, which is trained with Quantization-Aware Training (QAT) at ternary precision. All the models have been trained on the same 300B tokens, have the same LLaMA-style architecture and share the same tokenizer [Kaushal et al., 2024].
+# 2 Experimental Setup
+We evaluate the models of the SpectraSuite family [Kaushal et al., 2024]. The chosen models range from 99M to 3.9B parameters. We use models from two sub-families: FloatLM, which is trained with FP16 precision, and TriLM, which is trained with Quantization-Aware Training (QAT) at ternary precision. All models were trained on the same 300B tokens, have the same LLaMA-style architecture and share the same tokenizer.
 
-We use draft and target models from both precisions: half-precision (FP16) and ternary draft models from 99M to 1.5B, and FP16 and ternary target models at 3.9B. We evaluate 14 pretrained draft models plus 7 PTQ variants against 2 target models.
+Draft and target models are evaluated at two precision levels: half-precision (FP16) and ternary precision. Draft models span seven sizes from 99M to 1.5B parameters; target models have 3.9B parameters. Both precision levels are tested at each parameter size. We evaluate 14 pretrained draft models (seven FP16, seven ternary) plus seven PTQ variants against two target models.
 
-We create our own Post-Training Quantization (PTQ) models by applying per-matrix absmean round-to-nearest (RTN) on SpectraSuite's FP16 models. Absmean RTN is the technique used by SpectraSuite while training the TriLM family with QAT, so the PTQ application serves as a control. We conduct this operation only on the seven block projections: the query/key/value/output projections in attention, and gate/up/down MLP projections. We leave the embeddings, norms, and the output LM head untouched.
+We construct PTQ models by applying per-matrix absmean round-to-nearest (RTN) to SpectraSuite's FP16 models. Naive absmean RTN is the technique used by SpectraSuite while training the TriLM family with QAT; therefore, the PTQ application serves as a control. We apply naive absmean RTN only to seven block projections: the query/key/value/output attention projections, and gate/up/down MLP projections. Embeddings, norms, and the output LM head are left unquantized.
 
-We evaluate speculative decoding acceptance rate across 3 domains and 1,024 prompts: the web domain with a size of 512 prompts, the code domain with a size of 256 prompts, and the chat domain with a size of 256 prompts. The web dataset comes from allenai/c4, which itself comes from Common Crawl. The code dataset is a subset of HuggingFaceCode/stack-v3-train, which comes from public GitHub repositories. Only repositories with permissive licenses were used. The chat dataset comes from allenai/WildChat-4.8M, which consists of conversations between users and ChatGPT. We use the English C4 validation split for web; for code we keep only files timestamped after January 2025, which postdates the models' training data and guards against contamination; and for chat we keep English-only conversations rendered as alternating User:/Assistant: turns (see the repository for full filtering details).
+We evaluate speculative decoding acceptance rate across three domains and 1,024 prompts: the web domain (512 prompts), the code domain  (256), and the chat domain (256). The web dataset comes from allenai/c4, which itself is derived from Common Crawl. The code dataset is a subset of HuggingFaceCode/stack-v3-train, which comes from public GitHub repositories. Only code files with permissive licenses were used. The chat dataset comes from allenai/WildChat-4.8M, which consists of conversations between users and ChatGPT. We use the English C4 validation split for web; for code we keep only files timestamped after January 2025, which postdates the models' training data and guards against contamination; and for chat we keep English-only conversations rendered as alternating User:/Assistant: turns (see the repository for full filtering details).
 
-Documents are sampled from each dataset using a fixed seed. We start the prompt prefixes at token index 500 of every chosen dataset document. The prompts are all 256 tokens long, and we make the target models generate tokens 256-511. During generation and scoring, we mask the EOS token at every position by setting its pre-softmax logit to $-\infty$, so the target model generates tokens and the draft model computes logits until position 511. We use temperature $1.0$. In total, 21 draft models, 2 target models, and 3 domains give us 126 target-draft-domain combinations.
+Documents are sampled from each dataset using a fixed seed. We start the prompt prefixes at token index 500 of every chosen dataset document. The prompts are 256 tokens long, and the target models generate tokens 256-511. During generation and scoring, we mask the EOS token at every position by setting its pre-softmax logit to $-\infty$ so that the generation continues until position 511. We use temperature $1.0$. In total, 21 draft models, two target models, and three domains provide 126 target-draft-domain combinations.
 
 We define $\alpha_t$, the acceptance probability at token position $t$, as
 $$ \alpha_t = \sum_{x \in V} \min\big(p_t(x),\, q_t(x)\big)$$ 
@@ -31,29 +31,29 @@ where $V$ is the models’ vocabulary, $x$ is a token in $V$, $p_t(x)$ is the pr
 
 At position $t$, $p_t$ and $q_t$ are conditioned on the 256-token prefix plus the target-generated continuation up to position $t-1$. This makes the computation of $\alpha$ teacher-forced. We compute the mean acceptance probability per prompt $\alpha_{\text{prompt}}$ by averaging $\alpha_t$ over the 256 positions that the target generated. 
 
-We define analytical $\alpha$ as $\alpha_{\text{prompt}}$ averaged over all the prompts that a specific combination was evaluated on. $\alpha$ is used interchangeably with acceptance rate, since $\alpha_t$ equals the probability that a token sampled from $q_t$ is accepted by the speculative sampling rejection rule. This identity was derived in the original speculative decoding paper [Leviathan et al., 2023].
+We define analytical $\alpha$ as $\alpha_{\text{prompt}}$ averaged over all prompts that a specific combination was evaluated on. $\alpha$ is used interchangeably with acceptance rate, since $\alpha_t$ equals the probability that a token sampled from $q_t$ is accepted by the speculative sampling rejection rule. This identity was derived in the original speculative decoding paper [Leviathan et al., 2023].
 
 We model the expected tokens per round as $\mathbb{E}[\text{tokens/round}] = \sum_{i=0}^{k} \alpha^i = \frac{1 - \alpha^{k+1}}{1 - \alpha}$, where a round is one cycle of draft proposing and target verifying, and $k$ is the number of tokens drafted per round. We assume that each drafted token is accepted independently with probability $\alpha$ [Leviathan et al., 2023]. In Section 3.5, for validation, we evaluate this formula per prompt at $\alpha_{\text{prompt}}$ and average the per-prompt predictions. In Section 3.4, for speedup, we evaluate this formula per combination at the analytical $\alpha$ of that combination. By convexity, the latter understates the average of per-prompt predictions, making the speedup estimates conservative.
 
-We estimate 95% confidence intervals (CIs) of analytical $\alpha$ with a nonparametric bootstrap via resampling of $\alpha_{\text{prompt}}$ with replacement (percentile method, 2,000 resamples). We also pair up the FP16 and ternary draft models by their parameter counts and evaluate the penalty of using a ternary draft model, the analytical $\alpha$ difference $\alpha(\text{TriLM draft}) - \alpha(\text{FloatLM draft})$, for each pair. We use the same CI estimation but with per-prompt differences. For $\alpha$, we measure the noise floor by running the 3.9B targets as drafts against themselves. Ideally this should result in $\alpha = 1$. Self-$\alpha$ runs $0.982-0.989$ for FloatLM and $0.993-0.995$ for TriLM, so the floor is $0.006-0.018$ depending on family and domain. The noise has two sources: the same BF16 weights traversed by two numerically distinct paths (incremental KV-cached generation vs. a single full-sequence scoring pass) during generation and scoring, and the FP16 rounding of the stored target logits.
+We estimate 95% confidence intervals (CIs) of analytical $\alpha$ with a nonparametric bootstrap via resampling of $\alpha_{\text{prompt}}$ with replacement (percentile method, 2,000 resamples). Additionally, we pair up the FP16 and ternary draft models by their parameter counts and evaluate the penalty of using a ternary draft model, the analytical $\alpha$ difference $\alpha(\text{TriLM draft}) - \alpha(\text{FloatLM draft})$, for each pair. We use the same CI estimation but with per-prompt differences. For $\alpha$, we measure the noise floor by running the 3.9B targets as drafts against themselves. Ideally this should result in $\alpha = 1$. Self-$\alpha$ is $0.982-0.989$ for FloatLM and $0.993-0.995$ for TriLM; the noise floor is thus $0.006-0.018$ depending on family and domain. The noise has two sources: the same BF16 weights traversed by two numerically distinct paths (incremental KV-cached generation vs. a single full-sequence scoring pass) during generation and scoring, and the FP16 rounding of the stored target logits.
 
 For TriLM and PTQ models, only the seven block projections use ternary weights and we assume they occupy 2 bits per weight [Vaidhya et al., 2025]. We assume the other weights of these models and all of the weights of FloatLM models occupy 16 bits per weight.
 
-Speedup is computed relative to the standard autoregressive, target-only decoding ($1\times$). We measure everything using one target-forward-pass cost as a unit. We assume the cost is memory-bound, so $\text{cost of one forward pass of a model} \approx \text{cost of streaming the model’s weights}$. Therefore we derive cost $c$ as $\frac{\text{memory footprint of the draft model}}{\text{memory footprint of the target model}}$. Scoring $k$ tokens (and obtaining the bonus/resample distribution) costs $1$, since it only takes one target forward pass. Using the above definitions, we calculate speedup using the formula
+Speedup is computed relative to the standard autoregressive, target-only decoding ($1\times$). We express all costs in units of one target forward pass. We assume the cost is memory-bound, so $\text{cost of one forward pass of a model} \approx \text{cost of streaming the model’s weights}$. Therefore, we derive cost $c$ as $\frac{\text{memory footprint of the draft model}}{\text{memory footprint of the target model}}$. Scoring $k$ tokens (and obtaining the bonus/resample distribution) costs $1$, since it only takes one target forward pass. Using the above definitions, we calculate speedup using the formula
 $$\frac{\mathbb{E}[\text{tokens/round}]}{1 + k \cdot c}$$
 where $1$ is the cost of the target’s forward pass, $k$ is the number of tokens drafted per round, and $c$ is the relative cost of a single draft forward pass. We use $k=5$ throughout this paper.
 
-We also validate the analytical part of this experiment with end-to-end speculative decoding runs. We randomly select a total of 256 prompts from our datasets (128 web prompts, 64 code prompts, 64 chat prompts). We run real-time speculative decoding using 9 draft models {99M, 560M, 1.5B} $\times$ {FloatLM, TriLM, PTQ} on each prompt, where we measure accepted draft tokens (plus the bonus/resample token) per round. We use a FloatLM_3.9B target in validation.
+Finally, we validate the analytical part of this experiment with end-to-end speculative decoding runs against the FloatLM_3.9B target. We randomly select a total of 256 prompts from our datasets (128 web prompts, 64 code prompts, 64 chat prompts). We run real-time speculative decoding using nine draft models {99M, 560M, 1.5B} $\times$ {FloatLM, TriLM, PTQ} on each prompt, where we measure accepted draft tokens (plus the bonus/resample token) per round.
 
 
 # 3 Results
 
-## 3.1 The claim
-When evaluating mean analytical $\alpha$ against a fixed parameter count, ternary models perform worse in every parameter size tested. However, we claim that in draft model selection, draft models can also be judged by draft models’ memory footprint rather than only parameter counts.
+## 3.1 Ternary drafts match or outperform FP16 drafts at matched memory
+At matched parameter count, ternary drafts attain lower $\alpha$ at every size tested. However, we argue that in draft model selection, models can also be judged by memory footprint rather than only parameter counts.
 
-Evaluated at matched memory footprint, ternary drafts achieve higher $\alpha$ at every point on the 200–740 MB overlap, except the 200 MB boundary (tie). The advantage widens with scale: matching a 278 MB ternary draft takes the FP16 draft $1.31\times$ the memory, rising to $1.74\times$ against the 740 MB ternary draft at 1.5B parameters.
+Evaluated at matched memory footprint, ternary drafts achieve higher $\alpha$ at every point on the 200–740 MB overlap, except the 200 MB boundary (tie). The advantage widens with scale: an FP16 draft requires $1.31\times$ the memory to match a 278 MB ternary draft, rising to $1.74\times$ at 740 MB (1.5B parameters, FP16 target, web domain).
 
-As an example where the memory footprint is held similar, TriLM_1.5B (740MB) is smaller than FloatLM_390M (785MB), and its $\alpha$ is $0.0229$ higher than FloatLM_390M ($0.7327$ vs $0.7098$). Results are consistent across chat and code (Appendix Tables A1 and A2).
+For example, TriLM_1.5B (740 MB) occupies less memory than FloatLM_390M (785 MB) yet attains a higher $\alpha$ ($0.7327$ vs. $0.7098$). Results are consistent across chat and code (Appendix Tables A1 and A2).
 
 Figure 1, two-panel side by side as one figure:
 ![](data/alpha_vs_size_m_main_FloatLM_3.9B_web.png)
@@ -61,44 +61,44 @@ Figure 1, two-panel side by side as one figure:
 
 Figure 1: Mean acceptance rate $\alpha$ against draft parameter count (left) and draft memory footprint (right), web domain, FloatLM_3.9B target.
 
-## 3.2 Precision Matching
-There is a penalty we pay when using ternary drafts compared to their FP16 counterparts at matched parameters, and we calculate it as $\alpha(\text{TriLM draft}) - \alpha(\text{FloatLM draft})$.
+## 3.2 The ternary penalty at matched parameters depends on target precision
+Ternary drafts incur an $\alpha$ penalty relative to their FP16 counterparts at matched parameters. We calculate it as $\alpha(\text{TriLM draft}) - \alpha(\text{FloatLM draft})$.
 
-However, this penalty depends on the precision of the target model we use. At small parameter counts, the penalty is similarly large against both FP16 and ternary target models. For example, at 99M, the penalties are $-0.0540$ and $-0.0515$, respectively. As the parameter count increases, the penalty against the ternary target rapidly narrows toward zero whereas the penalty against the FP16 target narrows much more slowly. At 1.5B, the penalty against the ternary target stands at $-0.0031$, whereas the penalty against the FP16 target stands at $-0.0348$. There is a visible difference between penalties against FP16 targets and ternary targets, depending on model parameter count. The penalty $-0.0031$ is at the scale of the noise floor, but the paired gap comparison stays meaningful since the target-side $\alpha$ noise is shared by both drafts within each paired difference and the CI still excludes zero.
+However, this penalty depends on the precision of the target model. For example, at 99M, the penalties against the FP16 and ternary targets are $-0.0540$ and $-0.0515$, respectively. As the parameter count increases, the penalty against the ternary target rapidly narrows toward zero whereas the penalty against the FP16 target narrows much more slowly. At 1.5B, the penalty against the ternary target is $-0.0031$, whereas the penalty against the FP16 target is $-0.0348$. The penalty $-0.0031$ is at the scale of the noise floor, but the paired gap comparison stays meaningful since the target-side $\alpha$ noise is shared by both drafts within each paired difference and the CI still excludes zero.
 
-This suggests two components of the penalty: inferior model capacity and precision mismatch between the target and the draft models. At small parameter counts, the penalty is similarly large against both FP16 and ternary targets. This suggests that the penalty at small parameter counts doesn't depend on target model’s precision. At larger parameter counts, the differences in penalty become larger. At 1.5B, the difference between penalties against FP16 and ternary targets rises to $0.0317$, from $0.0025$ at 99M.
+At small parameter counts, the penalty is similarly large against both FP16 and ternary targets. This indicates that the penalty at small parameter counts does not depend on the target model’s precision. At larger parameter counts, the differences in penalty become larger. At 1.5B, the difference between penalties against FP16 and ternary targets rises to $0.0317$, from $0.0025$ at 99M. 
 
-Switching the target from FP16 to ternary makes the FP16 draft worse (−0.0123) and the ternary draft better (+0.0194). Results are consistent across chat and code (Appendix Tables A1 and A3).
+Switching the target from FP16 to ternary makes the FP16 draft worse ($−0.0123$) and the ternary draft better ($+0.0194$). This suggests two components of the penalty: reduced draft capacity and precision mismatch between the target and the draft models. Results are consistent across chat and code (Appendix Tables A1 and A3).
 
-| draft (1.5B) | FloatLM_3.9B target | TriLM_3.9B target | Δ going from FP to ternary target |
+| draft (1.5B) | FloatLM_3.9B target | TriLM_3.9B target | Δ going from FP16 to ternary target |
 |---|---|---|---|
 | FloatLM_1.5B | 0.7675 | 0.7552 | −0.0123 |
 | TriLM_1.5B | 0.7327 | 0.7521 | +0.0194 |
-| Δ going from FP to ternary draft  | −0.0348 | −0.0031 | |
+| Δ going from FP16 to ternary draft  | −0.0348 | −0.0031 | |
 
 Figure 2:
 ![](data/paired_gap_web.png)
 Figure 2: The difference between mean acceptance rates of ternary and FP16 draft (the analytical $\alpha$ gap) against draft parameter count, web domain, against both FloatLM_3.9B and TriLM_3.9B targets.
 
-## 3.3 PTQ
-Holding memory footprint fixed, the method of quantization matters. Ternary drafts trained with QAT work, while the ternary drafts quantized via PTQ collapse. In Figure 3, it is visible that PTQ completely collapses the model quality and analytical $\alpha$.
+## 3.3 PTQ collapses the draft
+At fixed memory footprint, the quantization method matters. Ternary drafts trained with QAT retain high $\alpha$, while the ternary drafts quantized via PTQ collapse. Figure 3 shows that PTQ severely degrades analytical $\alpha$.
 
-At a memory footprint of ~740 MB, TriLM_1.5B and PTQ_1.5B have identical architecture, parameter counts, and memory footprint. However, the PTQ performs significantly worse with analytical $\alpha$ at $0.0823$ compared to the QAT ternary model’s $0.7327$. Results are consistent across chat and code (Appendix Table A1).
+At a memory footprint of $\sim$740 MB, TriLM_1.5B and PTQ_1.5B have identical architecture, parameter counts, and memory footprint. The PTQ model attains $\alpha = 0.0823$ compared to the QAT ternary model’s $\alpha = 0.7327$. Results are consistent across chat and code (Appendix Table A1).
 
 ![](data/alpha_vs_mb_all_FloatLM_3.9B_web.png)
 Figure 3: Mean acceptance rate $\alpha$ against draft memory footprint, web domain, PTQ included, FloatLM_3.9B target.
 
 
-## 3.4 Speedup
-Ternary drafts’ speedup peaks at $2.28\times$, compared to FP16 drafts’ peak of $2.17\times$.
+## 3.4 Ternary drafts sustain speedup across the memory range
+The speedup of ternary drafts peaks at $2.28\times$, compared to $2.17\times$ for FP16 drafts.
 
-Ternary drafts’ speedup sits at $2.05–2.28\times$ across the full 115–740 MB range, while FP16 peaks at $2.17\times$ with a 99M draft and falls to $1.18\times$ by 1.5B. FP drafts’ speedup is strongly dependent on model parameter count, while ternary drafts’ speedup isn't.
+The speedup of ternary drafts remains within $2.05–2.28\times$ across the full 115–740 MB range, while FP16 peaks at $2.17\times$ with a 99M draft and falls to $1.18\times$ by 1.5B. The speedup of FP16 drafts depends strongly on model parameter count, while the speedup of ternary drafts does not.
 
-We also anticipate that the speedup of ternary draft will increase as the target model gets larger, since $c$ will decrease significantly.
+Additionally, we anticipate that the speedup of ternary drafts will increase as the target model grows in parameters, since $c$ will decrease substantially.
 
-The speedups of all draft models against the ternary target is lower when compared to the speedups against the FP target. This is caused by the target model’s footprint already being small, resulting in a higher c in the speedup formula.
+The speedups of all draft models against the ternary target are lower than the speedups against the FP16 target. Because the ternary target model’s footprint is smaller, the relative draft cost $c$ is higher.
 
-PTQ slows generation down. PTQ_1.5B at 740 MB generates $1.09$ tokens per round, which amounts to a $0.74\times$ speedup, slower than not using speculative decoding at all. Results are consistent across chat and code (Appendix Table A4).
+PTQ slows generation. PTQ_1.5B at 740 MB generates $1.09$ tokens per round, which amounts to a $0.74\times$ speedup, slower than standard autoregressive decoding. Results are consistent across chat and code (Appendix Table A4).
 
 Figure 4, two-panel side by side as one figure:
 ![](data/speedup_FloatLM_3.9B_web.png)
@@ -106,35 +106,35 @@ Figure 4, two-panel side by side as one figure:
 Figure 4: Predicted speedup against draft memory footprint, web domain, PTQ included, against a FloatLM_3.9B target (left) and TriLM_3.9B target (right).
 
 ## 3.5 Validation
-Predicted and measured tokens per round track each other closely across 27 distinct combinations of domains and draft models. Mean deviation is $-0.0394$ on values from $1.01$ to $3.97$, with a maximum of $0.19$. Measured values fall below predicted in 21 of the 27 combinations. One likely cause is that acceptance declines across draft depth, whereas the analytical estimate sees target-generated context at every position (Appendix Table A5).
+Predicted and measured tokens per round track each other closely across 27 distinct combinations of domains and draft models. Mean deviation is $-0.0394$ on values from $1.01$ to $3.97$, with a maximum absolute deviation of $0.19$. Measured values fall below predicted in 21 of the 27 combinations (Appendix Table A5). One likely cause is that acceptance declines across draft depth, whereas the analytical estimate sees target-generated context at every position.
 
 
 ![](data/validation_scatter.png)
-Figure 5: Measured tokens per round from real time speculative decoding against predicted tokens per round computed from the analytical $\alpha$, all domains, PTQ included, FloatLM_3.9B target.
+Figure 5: Measured tokens per round from real-time speculative decoding against predicted tokens per round computed from the analytical $\alpha$, all domains, PTQ included, FloatLM_3.9B target.
 
 
 # 4 Related Work
-Speculative decoding has been proposed to speed up inference by using a smaller model to autoregressively generate k tokens in k passes, and making the main model score these k tokens plus its own prediction in one forward pass, with a rejection rule that preserves the target's output distribution [Leviathan et al., 2023, Chen et al., 2023]. BitNet explored 1-bit transformers with weights {-1, 1}, and BitNet b1.58 proposed transformers with ternary weights {-1, 0, 1} [Wang et al., 2023, Ma et al., 2024]. Spectra explores training ternary models on a much larger scale, and comparing them to the identical-except-precision FP16 counterparts [Kaushal et al., 2024]. Spectra 1.1 proposes a 2-bit packing scheme for storing weights [Vaidhya et al., 2025].
+Speculative decoding has been proposed to speed up inference by using a smaller model to autoregressively generate $k$ tokens in $k$ passes, and making the main model score these $k$ tokens plus its own prediction in one forward pass, with a rejection rule that preserves the target's output distribution [Leviathan et al., 2023; Chen et al., 2023]. BitNet explored 1-bit transformers with weights $\{-1, 1\}$, and BitNet b1.58 proposed transformers with ternary weights $\{-1, 0, 1\}$ [Wang et al., 2023; Ma et al., 2024]. Spectra explores training ternary models on a much larger scale, and comparing them to the identical-except-precision FP16 counterparts [Kaushal et al., 2024]. Spectra 1.1 proposes a 2-bit packing scheme for storing weights [Vaidhya et al., 2025].
 
-Measuring acceptance rate across multiple domains was explored [Mahmoud, 2026]. Applying post-training quantization to parts of speculative decoding has been explored by QSpec, which uses a quantized version of the target as the draft model with the models sharing weights, drafting at 4-bit weights and activations, and scoring at 4-bit weights with 16-bit activations [Zhao et al., 2024]. Similarly, QuantSpec uses 4-bit weights and a 4-bit KV cache for long-context inference [Tiwari et al., 2025]. In contrast, ML-SpecQD uses separate MXFP4-quantized drafts, and the authors propose exploring 2-bit drafts as future work [Georganas et al., 2025]. 
+Mahmoud [2026] measures acceptance rates across multiple domains. Applying post-training quantization on parts of speculative decoding has been explored by QSpec, which uses a quantized version of the target as the draft model with the models sharing weights, drafting at 4-bit weights and activations, and scoring at 4-bit weights with 16-bit activations [Zhao et al., 2024]. Similarly, QuantSpec uses 4-bit weights and a 4-bit KV cache for long-context inference [Tiwari et al., 2025]. In contrast, ML-SpecQD uses separate MXFP4-quantized drafts, and the authors propose exploring 2-bit drafts as future work [Georganas et al., 2025]. 
 
 These works mainly focus on quantization after training. Whether a model trained at low precision with QAT makes a better draft has not been tested, because it requires a low-precision and a full/half-precision model matched in architecture, tokenizer, and training data. This pair did not exist publicly until SpectraSuite.
 
 # 5 Limitations
 Some limitations of this study include:
-1. PTQ: The PTQ method used is naive absmean RTN, which is the same quantization function TriLM uses during QAT. This makes it the right control for isolating training-time vs post-training quantization under the same weight format. However, this method is fairly primitive. Stronger methods with calibration or error compensation (e.g., GPTQ, AWQ) would likely collapse far less. So our results show that naive RTN ternarization fails at these scales, and that QAT avoids this failure. They do not show that there is no post-training path to a ternary draft.
-2. Scope: Although two different targets were used, only one target size was used (3.9B), temperature was fixed at $1.0$, $k$ was fixed at $k=5$, EOS was masked to prevent early termination, and a fixed prefix was used.
-3. Lack of wall-clock speedup measurements: SpectraSuite’s pre-released ternary models were unpacked, which means that although the weights are ternary, they are stored in FP16 format on disk. Speedups are predicted from the cost model rather than measured real time. The cost is only computed from memory footprint, assuming that speedup is memory-bound.
-4. Domain: We only test 3 domains, and we test continuation from a fixed offset. Since SpectraSuite models were only pretrained, our prompts do not include instruction following or reasoning tasks. 
-5. Validation: The empirical validation only runs on 9 selected models on a subset of the prompt set, consisting of 256 prompts.
+1. PTQ: The PTQ method used is naive absmean RTN, which is the same quantization function TriLM uses during QAT. This makes it the right control for isolating training-time vs. post-training quantization under the same weight format. However, this method is fairly primitive. Stronger methods with calibration or error compensation (e.g., GPTQ, AWQ) would likely collapse far less. Our results therefore show that naive RTN ternarization fails at these scales, and that QAT avoids this failure. They do not show that there is no post-training path to a ternary draft.
+2. Scope: Although two different targets were used, only one target size was used (3.9B), temperature was fixed at $1.0$, $k$ was fixed at $k=5$, EOS was masked to prevent early termination, and a fixed prefix starting at token index 500 was used for every document.
+3. Lack of wall-clock speedup measurements: The models of SpectraSuite are released in unpacked format. This means that the weights are ternary, but are stored in FP16 format on disk. Therefore, speedups are predicted from the cost model rather than measured in wall-clock time. The cost is only computed from memory footprint, assuming that speedup is memory-bound.
+4. Domain: Models were only tested on three domains and on continuation from a fixed offset. SpectraSuite models were only pre-trained; therefore, we evaluate the models only on continuation tasks, instead of other tasks such as instruction following or long-context reasoning.
+5. Validation: The empirical validation only runs on nine selected models. The nine models are evaluated on a random subset of the prompt set consisting of 256 prompts.
 6. Absence of INT4/INT8 comparison: On memory-bound devices, users typically deploy INT4/INT8 draft models, quantized after training. At INT4/INT8 precision, PTQ typically does not collapse models. Such drafts might be competitive with our ternary drafts at matched memory footprint. This limitation does not affect our controlled comparison, but only limits the deployment recommendation’s scope.
 
 # 6 Conclusion & Future Work
-We find that an FP16 draft needs $1.74\times$ as much memory to match the best ternary draft's acceptance rate. The ternary-draft penalty at matched parameters depends on the target's precision. It nearly vanishes against a ternary target at 1.5B but persists against an FP16 target. This suggests the penalty has two components: reduced draft capacity and a precision mismatch between draft and target. We find that PTQ via absmean RTN without calibration collapses the draft, whereas ternarization via QAT results in a usable draft model. Also, against the FP16 target, FP16 drafts' speedup is strongly dependent on model parameter count, while ternary drafts' speedup isn't.
+We find that an FP16 draft needs $1.74\times$ as much memory to match the best ternary draft's acceptance rate (1.5B, FP16 target, web domain). The ternary-draft penalty at matched parameters depends on the target's precision. It nearly vanishes against a ternary target at 1.5B but persists against an FP16 target. This suggests the penalty has two components: reduced draft capacity and a precision mismatch between draft and target. We find that PTQ via absmean RTN without calibration collapses the draft, whereas ternarization via QAT results in a usable draft model. Moreover, against the FP16 target, the speedup of FP16 drafts depends strongly on model parameter count, while the speedup of ternary drafts does not.
 
-On memory-bound hardware, if a QAT variant exists, ternary draft models should be chosen rather than FP16 draft models for higher acceptance rates and speedup.
+On memory-bound hardware, our results support choosing ternary QAT draft models over FP16 draft models for higher acceptance rates and speedup.
 
-Future work includes real-time wall-clock speedup measurements, comparing ternary drafts with INT4/INT8 PTQ drafts that are more common in the real world, and testing drafts with larger ternary targets. The last one is a promising direction specifically because our own data shows that the ternary penalty vanishes as the ternary draft size increases against a ternary target. However, it would require large ternary models to be more common.
+Future work includes real-time wall-clock speedup measurements, comparing ternary drafts with INT4/INT8 PTQ drafts that are more common in deployment, and testing drafts with larger ternary targets. The last direction is specifically promising because our results show that the ternary penalty vanishes as the ternary draft size increases against a ternary target. However, it would require large ternary models to become more available.
 
 # Appendix
 
@@ -146,7 +146,7 @@ A1:
 \toprule
  &  & \multicolumn{3}{c}{FloatLM} & \multicolumn{3}{c}{TriLM} & \multicolumn{3}{c}{PTQ} \\
  &  & web & chat & code & web & chat & code & web & chat & code \\
-target & size\_m &  &  &  &  &  &  &  &  &  \\
+target & params (M) &  &  &  &  &  &  &  &  &  \\
 \midrule
 \multirow[t]{8}{*}{FloatLM\_3.9B} & 99 & 0.6126 & 0.6644 & 0.7190 & 0.5586 & 0.5985 & 0.6562 & 0.0188 & 0.0106 & 0.0048 \\
  & 190 & 0.6559 & 0.7023 & 0.7515 & 0.6046 & 0.6501 & 0.7018 & 0.0396 & 0.0291 & 0.0153 \\
@@ -177,7 +177,7 @@ A2:
 \label{tab:parity}
 \begin{tabular}{llrrr}
 \toprule
- &  & ternary & fp16\_equivalent & ratio \\
+ &  & ternary (MB) & FP16 equiv. (MB) & ratio \\
 target & domain &  &  &  \\
 \midrule
 \multirow[t]{15}{*}{FloatLM\_3.9B} & web & 278 & 365 & 1.31 \\
@@ -216,6 +216,7 @@ target & domain &  &  &  \\
 \end{tabular}
 \end{table}
 
+
 A3:
 \begin{table}
 \caption{$\alpha$ penalty of a ternary draft at matched parameter count, $\alpha(TriLM) - \alpha(FloatLM)$, for both targets and all domains. 95\% CIs from percentile bootstrap over per-prompt paired differences (2,000 resamples). Temperature 1.0, EOS masked.}
@@ -242,60 +243,61 @@ A4:
 \label{tab:speedup}
 \begin{tabular}{lllrrr}
 \toprule
- &  & domain & web & chat & code \\
+ &  &  & web & chat & code \\
 target & family & MB &  &  &  \\
 \midrule
-\multirow[t]{21}{*}{FloatLM\_3.9B} & \multirow[t]{7}{*}{FloatLM} & 199.500000 & 2.17 & 2.42 & 2.73 \\
- &  & 381.100000 & 2.16 & 2.39 & 2.66 \\
- &  & 785.000000 & 2.01 & 2.19 & 2.40 \\
- &  & 1138.500000 & 1.82 & 1.98 & 2.16 \\
- &  & 1668.200000 & 1.59 & 1.73 & 1.86 \\
- &  & 2299.400000 & 1.37 & 1.49 & 1.59 \\
- &  & 3030.600000 & 1.18 & 1.27 & 1.36 \\
+\multirow[t]{21}{*}{FloatLM\_3.9B} & \multirow[t]{7}{*}{FloatLM} & 200 & 2.17 & 2.42 & 2.73 \\
+ &  & 381 & 2.16 & 2.39 & 2.66 \\
+ &  & 785 & 2.01 & 2.19 & 2.40 \\
+ &  & 1138 & 1.82 & 1.98 & 2.16 \\
+ &  & 1668 & 1.59 & 1.73 & 1.86 \\
+ &  & 2299 & 1.37 & 1.49 & 1.59 \\
+ &  & 3031 & 1.18 & 1.27 & 1.36 \\
 \cline{2-6}
- & \multirow[t]{7}{*}{PTQ} & 115.100000 & 0.95 & 0.94 & 0.94 \\
- &  & 182.900000 & 0.93 & 0.92 & 0.91 \\
- &  & 278.500000 & 0.91 & 0.89 & 0.87 \\
- &  & 367.800000 & 0.85 & 0.84 & 0.83 \\
- &  & 479.100000 & 0.84 & 0.82 & 0.79 \\
- &  & 603.900000 & 0.76 & 0.75 & 0.74 \\
- &  & 740.500000 & 0.74 & 0.72 & 0.71 \\
+ & \multirow[t]{7}{*}{PTQ} & 115 & 0.95 & 0.94 & 0.94 \\
+ &  & 183 & 0.93 & 0.92 & 0.91 \\
+ &  & 278 & 0.91 & 0.89 & 0.87 \\
+ &  & 368 & 0.85 & 0.84 & 0.83 \\
+ &  & 479 & 0.84 & 0.82 & 0.79 \\
+ &  & 604 & 0.76 & 0.75 & 0.74 \\
+ &  & 740 & 0.74 & 0.72 & 0.71 \\
 \cline{2-6}
- & \multirow[t]{7}{*}{TriLM} & 115.100000 & 2.05 & 2.22 & 2.50 \\
- &  & 182.900000 & 2.16 & 2.37 & 2.65 \\
- &  & 278.500000 & 2.26 & 2.49 & 2.76 \\
- &  & 367.800000 & 2.28 & 2.50 & 2.75 \\
- &  & 479.100000 & 2.27 & 2.48 & 2.71 \\
- &  & 603.900000 & 2.23 & 2.43 & 2.64 \\
- &  & 740.500000 & 2.16 & 2.35 & 2.54 \\
+ & \multirow[t]{7}{*}{TriLM} & 115 & 2.05 & 2.22 & 2.50 \\
+ &  & 183 & 2.16 & 2.37 & 2.65 \\
+ &  & 278 & 2.26 & 2.49 & 2.76 \\
+ &  & 368 & 2.28 & 2.50 & 2.75 \\
+ &  & 479 & 2.27 & 2.48 & 2.71 \\
+ &  & 604 & 2.23 & 2.43 & 2.64 \\
+ &  & 740 & 2.16 & 2.35 & 2.54 \\
 \cline{1-6} \cline{2-6}
-\multirow[t]{21}{*}{TriLM\_3.9B\_Unpacked} & \multirow[t]{7}{*}{FloatLM} & 199.500000 & 1.51 & 1.66 & 1.88 \\
- &  & 381.100000 & 1.21 & 1.32 & 1.48 \\
- &  & 785.000000 & 0.85 & 0.91 & 1.01 \\
- &  & 1138.500000 & 0.66 & 0.71 & 0.79 \\
- &  & 1668.200000 & 0.50 & 0.54 & 0.59 \\
- &  & 2299.400000 & 0.39 & 0.42 & 0.45 \\
- &  & 3030.600000 & 0.31 & 0.33 & 0.36 \\
+\multirow[t]{21}{*}{TriLM\_3.9B\_Unpacked} & \multirow[t]{7}{*}{FloatLM} & 200 & 1.51 & 1.66 & 1.88 \\
+ &  & 381 & 1.21 & 1.32 & 1.48 \\
+ &  & 785 & 0.85 & 0.91 & 1.01 \\
+ &  & 1138 & 0.66 & 0.71 & 0.79 \\
+ &  & 1668 & 0.50 & 0.54 & 0.59 \\
+ &  & 2299 & 0.39 & 0.42 & 0.45 \\
+ &  & 3031 & 0.31 & 0.33 & 0.36 \\
 \cline{2-6}
- & \multirow[t]{7}{*}{PTQ} & 115.100000 & 0.74 & 0.74 & 0.73 \\
- &  & 182.900000 & 0.65 & 0.65 & 0.64 \\
- &  & 278.500000 & 0.56 & 0.55 & 0.54 \\
- &  & 367.800000 & 0.48 & 0.47 & 0.46 \\
- &  & 479.100000 & 0.43 & 0.42 & 0.41 \\
- &  & 603.900000 & 0.35 & 0.35 & 0.35 \\
- &  & 740.500000 & 0.32 & 0.31 & 0.31 \\
+ & \multirow[t]{7}{*}{PTQ} & 115 & 0.74 & 0.74 & 0.73 \\
+ &  & 183 & 0.65 & 0.65 & 0.64 \\
+ &  & 278 & 0.56 & 0.55 & 0.54 \\
+ &  & 368 & 0.48 & 0.47 & 0.46 \\
+ &  & 479 & 0.43 & 0.42 & 0.41 \\
+ &  & 604 & 0.35 & 0.35 & 0.35 \\
+ &  & 740 & 0.32 & 0.31 & 0.31 \\
 \cline{2-6}
- & \multirow[t]{7}{*}{TriLM} & 115.100000 & 1.64 & 1.75 & 1.99 \\
- &  & 182.900000 & 1.55 & 1.68 & 1.89 \\
- &  & 278.500000 & 1.44 & 1.56 & 1.74 \\
- &  & 367.800000 & 1.32 & 1.43 & 1.58 \\
- &  & 479.100000 & 1.20 & 1.29 & 1.42 \\
- &  & 603.900000 & 1.08 & 1.15 & 1.27 \\
- &  & 740.500000 & 0.97 & 1.04 & 1.13 \\
+ & \multirow[t]{7}{*}{TriLM} & 115 & 1.64 & 1.75 & 1.99 \\
+ &  & 183 & 1.55 & 1.68 & 1.89 \\
+ &  & 278 & 1.44 & 1.56 & 1.74 \\
+ &  & 368 & 1.32 & 1.43 & 1.58 \\
+ &  & 479 & 1.20 & 1.29 & 1.42 \\
+ &  & 604 & 1.08 & 1.15 & 1.27 \\
+ &  & 740 & 0.97 & 1.04 & 1.13 \\
 \cline{1-6} \cline{2-6}
 \bottomrule
 \end{tabular}
 \end{table}
+
 
 
 A5:
@@ -304,7 +306,7 @@ A5:
 \label{tab:validation}
 \begin{tabular}{llrrrrrr}
 \toprule
- &  & analytical $\alpha$ & empirical $\alpha$ & pred. tok/rnd & meas. tok/rnd & $\alpha$ gap & tok/rnd gap \\
+ &  & analytical alpha & empirical alpha & pred. tok/rnd & meas. tok/rnd & alpha gap & tok/rnd gap \\
 draft & domain &  &  &  &  &  &  \\
 \midrule
 \multirow[t]{3}{*}{FloatLM\_1.5B} & chat & 0.7983 & 0.7907 & 3.6982 & 3.6192 & -0.0076 & -0.0789 \\
@@ -346,3 +348,4 @@ draft & domain &  &  &  &  &  &  \\
 \bottomrule
 \end{tabular}
 \end{table}
+

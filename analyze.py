@@ -242,6 +242,7 @@ def table_alpha(data_full: pd.DataFrame):
     cell = data_full.groupby(["target", "size_m", "family", "domain"])["alpha"].mean()
     table = cell.unstack(["family", "domain"])
     cols = pd.MultiIndex.from_product([["FloatLM", "TriLM", "PTQ"], ["web", "chat", "code"]])
+    table = table.rename_axis(index=["target", "params (M)"])
     return table.reindex(columns=cols)
 
 def table_gaps(data):
@@ -268,6 +269,7 @@ def table_parity(data):
                 rows.append({"target": target, "domain": domain, **r})  ### the ** in r in means "copy that dict into here"
     df = pd.DataFrame(rows)
     df[["ternary", "fp16_equivalent"]] = df[["ternary", "fp16_equivalent"]].round().astype(int) ## format for clean integers
+    df = df.rename(columns={"ternary": "ternary (MB)", "fp16_equivalent": "FP16 equiv. (MB)"})
     return df.set_index(["target", "domain"])
         
 def table_speedup(data: pd.DataFrame, footprints, k=config.K):
@@ -275,9 +277,9 @@ def table_speedup(data: pd.DataFrame, footprints, k=config.K):
     for (target, domain, family, mb), group in data.groupby(["target", "domain", "family", "mb"]):
         alpha = group["alpha"].mean()
         speedup = predicted_tokens_per_round(alpha, k) / (1 + k * (mb / footprints[target]))
-        rows.append({"target": target, "family": family, "MB": round(mb, 1), "domain": domain, "speedup": speedup})
+        rows.append({"target": target, "family": family, "MB": int(round(mb)), "domain": domain, "speedup": speedup})
     table = pd.DataFrame(rows).pivot_table(index=["target", "family", "MB"], columns="domain", values="speedup")
-    return table[["web", "chat", "code"]]
+    return table[["web", "chat", "code"]].rename_axis(columns=None)
 
 def make_appendix_tables(data_full, data, validation, footprints):
     save_latex(
@@ -289,7 +291,7 @@ def make_appendix_tables(data_full, data, validation, footprints):
     save_latex(
                 table_gaps(data),
                 "paired_gaps",
-                r"Alpha penalty of a ternary draft at matched parameter count, $\alpha(TriLM) - \alpha(FloatLM)$, for both targets and all domains. " 
+                r"$\alpha$ penalty of a ternary draft at matched parameter count, $\alpha(TriLM) - \alpha(FloatLM)$, for both targets and all domains. " 
                 r"95\% CIs from percentile bootstrap over per-prompt paired differences (2,000 resamples). Temperature 1.0, EOS masked.",
                 "paired-gaps")
     save_latex(
@@ -304,7 +306,7 @@ def make_appendix_tables(data_full, data, validation, footprints):
                 table_speedup(data, footprints), 
                 "speedup", 
                 r"Predicted speedup over target-only decoding for every draft, target, and domain, $k=5$. "
-                r"Computed from mean alpha and the memory-bound cost model. "
+                r"Computed from mean $\alpha$ and the memory-bound cost model. "
                 r"Footprints assume 2-bit ternary projections and FP16 elsewhere.", 
                 "speedup", 
                 float_fmt="%.2f")

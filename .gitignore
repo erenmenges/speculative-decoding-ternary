@@ -12,3 +12,4 @@ data/prompts.json
 .ruff_cache
 ptq_models/
 .DS_store
+paper.md
